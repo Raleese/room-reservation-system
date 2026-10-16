@@ -3,20 +3,24 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+// Services
 builder.Services.AddOpenApi();
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseInMemoryDatabase("RoomReservationDb"));
+
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(builder =>
+    options.AddDefaultPolicy(policy =>
     {
-        builder.WithOrigins("http://localhost:5173") // Frontend URL
-               .AllowAnyHeader()
-               .AllowAnyMethod();
+        policy.WithOrigins("http://localhost:5173") // Frontend URL
+              .AllowAnyHeader()
+              .AllowAnyMethod();
     });
 });
+
+builder.Services.AddScoped<IRoomService, RoomService>();
+
 builder.Services.AddControllers().AddJsonOptions(o => 
     o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
@@ -34,4 +38,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors();
+app.MapControllers();
+
 app.Run();
