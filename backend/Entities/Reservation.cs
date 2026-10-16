@@ -1,7 +1,7 @@
 public class Reservation
 {
     public Room Room { get; set; } = new Room();
-    public User organizer { get; set; } = new User();
+    public User Organizer { get; set; } = new User();
     public string MeetingTitle { get; set; } = string.Empty;
     public DateTime StartDate { get; set; } 
     public DateTime EndDate { get; set; }
