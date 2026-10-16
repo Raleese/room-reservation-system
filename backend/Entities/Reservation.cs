@@ -1,11 +1,13 @@
 public class Reservation
 {
-    public Room Room { get; set; } = new Room();
-    public User Organizer { get; set; } = new User();
+    public Room Room { get; set; } = null!;
+    public int RoomId { get; set; }
+    public User Organizer { get; set; } = null!;
+    public int UserId { get; set; }
     public string MeetingTitle { get; set; } = string.Empty;
     public DateTime StartDate { get; set; } 
     public DateTime EndDate { get; set; }
     public int NumberOfAttendees { get; set; }
-    public ReservationsStatus Status { get; set; }
+    public ReservationStatus Status { get; set; }
 
 }
