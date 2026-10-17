@@ -1,5 +1,6 @@
 public class Reservation
 {
+    public int Id { get; set; }
     public Room Room { get; set; } = null!;
     public int RoomId { get; set; }
     public User Organizer { get; set; } = null!;
