@@ -19,14 +19,18 @@ public class RoomService(AppDbContext db) : IRoomService
 
     public async Task<RoomDTO> CreateAsync(CreateRoomDTO dto)
     {
+        var equipmentFlags = Equipment.None;
+        foreach (var equipment in dto.Equipment)
+        {
+            equipmentFlags |= equipment;
+        }
+
         var room = new Room
         {
-            Name = dto.Name,
+            Name = dto.Name.Trim(),
             Capacity = dto.Capacity,
             Floor = dto.Floor,
-            Equipment = dto.Equipment.Aggregate(
-                Equipment.None,
-                (combined, equipment) => combined | equipment),
+            Equipment = equipmentFlags,
             IsActive = dto.IsActive
         };
 
