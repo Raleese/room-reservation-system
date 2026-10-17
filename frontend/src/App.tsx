@@ -3,9 +3,10 @@ import { AppBar, Toolbar, Typography, Button } from '@mui/material'
 import Home from './Pages/Home.tsx'
 import Rooms from './Pages/Rooms.tsx'
 
-  const USER_PATH = "/users";
-  const ROOMS_PATH = "/rooms";
-  const RESERVATIONS_PATH = "/reservations";
+const HOME_PATH = "/";
+const USERS_PATH = '/users';
+const ROOMS_PATH = '/rooms';
+const RESERVATIONS_PATH = '/reservations';
 
 function App() {
 
@@ -24,7 +25,7 @@ function App() {
           </Typography>
           <Button
             component={Link}
-            to="/"
+            to={HOME_PATH}
             sx={{
               backgroundColor: '#9dacbe',
               '&:hover': { backgroundColor: '#bfdbfe' },
@@ -35,7 +36,7 @@ function App() {
           </Button>
           <Button
             component={Link}
-            to={USER_PATH}
+            to={USERS_PATH}
             sx={{
               backgroundColor: '#9dacbe',
               '&:hover': { backgroundColor: '#bfdbfe' },
@@ -70,7 +71,7 @@ function App() {
       </AppBar>
 
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path={HOME_PATH} element={<Home />} />
         <Route path={ROOMS_PATH} element={<Rooms />} />
       </Routes>
     </>
