@@ -14,7 +14,7 @@ const EQUIPMENT_OPTIONS: { value: Equipment; label: string }[] = [
 const ACTIVE_OPTIONS: { value: 'Active' | 'Inactive'; label: string }[] = [
     { value: 'Active', label: 'Yes' },
     { value: 'Inactive', label: 'No' },
-] as const;
+];
 
 function RoomForm({ onRoomCreated }: RoomFormProps) {
     const [roomName, setRoomName] = useState('');
