@@ -24,3 +24,7 @@ export type Equipment =
 export type FormAlertProps = {
     message: string;
 };
+
+export type RoomFormProps = {
+    onRoomCreated: (room: Room) => void;
+};
