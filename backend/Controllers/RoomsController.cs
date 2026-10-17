@@ -33,12 +33,12 @@ public class RoomsController (IRoomService rooms) : ControllerBase
             return BadRequest("At least one equipment item must be selected.");
         }
 
-        if (createRoomDTO.Equipment.Any(e => e == Equipment.None || !Enum.IsDefined(e)))
+        var createdRoom = await rooms.CreateAsync(createRoomDTO);
+        if (createdRoom is null)
         {
-            return BadRequest("The request contains an invalid equipment item.");
+            return Conflict("A room with this name already exists.");
         }
 
-        var createdRoom = await rooms.CreateAsync(createRoomDTO);
         return Created("/api/rooms", createdRoom);
     }
 
