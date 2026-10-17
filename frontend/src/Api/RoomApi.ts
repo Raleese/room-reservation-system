@@ -1,4 +1,4 @@
-import type { Room } from '../Types/system_types';
+import type { Room, CreateRoom } from '../Types/system_types';
 
 const BASE_URL = 'http://localhost:5055/api';
 
@@ -21,4 +21,13 @@ async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
 // Get all rooms
 export function getRooms(): Promise<Room[]> {
     return requestJson<Room[]>('/rooms');
+}
+
+// Create a new room
+export function createRoom(createRoomDTO: CreateRoom): Promise<Room> {
+  return requestJson<Room>('/rooms', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(createRoomDTO)
+  });
 }
