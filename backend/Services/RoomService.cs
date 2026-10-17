@@ -17,8 +17,19 @@ public class RoomService(AppDbContext db) : IRoomService
             r.IsActive)).ToList();
     }
 
-    public async Task<RoomDTO> CreateAsync(CreateRoomDTO dto)
+    public async Task<RoomDTO?> CreateAsync(CreateRoomDTO dto)
     {
+        var roomName = dto.Name.Trim();
+        var normalizedRoomName = roomName.ToUpper();
+
+        var roomAlreadyExists = await db.Rooms
+            .AnyAsync(room => room.Name.ToUpper() == normalizedRoomName);
+
+        if (roomAlreadyExists)
+        {
+            return null;
+        }
+
         var equipmentFlags = Equipment.None;
         foreach (var equipment in dto.Equipment)
         {
@@ -27,7 +38,7 @@ public class RoomService(AppDbContext db) : IRoomService
 
         var room = new Room
         {
-            Name = dto.Name.Trim(),
+            Name = roomName,
             Capacity = dto.Capacity,
             Floor = dto.Floor,
             Equipment = equipmentFlags,
