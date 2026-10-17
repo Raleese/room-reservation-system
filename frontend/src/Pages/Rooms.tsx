@@ -1,10 +1,10 @@
 import { Box, Button, Container, MenuItem, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material';
 import { useState, useEffect } from 'react';
-import type { Room } from '../Types/system_types.ts';
-import { getRooms } from '../Api/RoomApi.ts';
+import type { Equipment, Room } from '../Types/system_types.ts';
+import { createRoom, getRooms } from '../Api/RoomApi.ts';
+import FormAlert from '../Components/FormAlert.tsx';
 
-// Constants for pagination and row height
-const ROOMS_PER_PAGE = 7;
+// Constants for row height
 const ROW_HEIGHT = 52;
 
 function Rooms() {
@@ -12,15 +12,76 @@ function Rooms() {
     const [roomName, setRoomName] = useState('');
     const [capacity, setCapacity] = useState('');
     const [floor, setFloor] = useState('');
-    const [equipment, setEquipment] = useState('');
+    const [equipment, setEquipment] = useState<Equipment[]>([]);
     const [active, setActive] = useState('');
+    const [formError, setFormError] = useState('');
 
+    // Fetch rooms from the API when the component mounts
     useEffect(() => {
-        // Fetch rooms from the API when the component mounts
         getRooms()
             .then((data) => setRooms(data))
             .catch((error) => console.error('Error fetching rooms: ', error));
     }, []);
+
+    // Function to handle adding a new room
+    const addRoom = async () => {
+        const trimmedRoomName = roomName.trim();
+        const numericCapacity = Number(capacity);
+        const numericFloor = Number(floor);
+
+        // Is the room name empty?
+        if (!trimmedRoomName) {
+            setFormError('Room name is required.');
+            return;
+        }
+
+        // Is the capacity a valid number?
+        if (!Number.isInteger(numericCapacity) || numericCapacity <= 0) {
+            setFormError('Capacity must be a whole number greater than zero.');
+            return;
+        }
+
+        // Is the floor a valid number?
+        if (!Number.isInteger(numericFloor) || numericFloor < 0) {
+            setFormError('Floor must be a whole number and cannot be negative.');
+            return;
+        }
+
+        // Is at least one equipment item selected?
+        if (equipment.length === 0) {
+            setFormError('At least one equipment item must be selected.');
+            return;
+        }
+
+        // Is the active status selected?
+        if (!active) {
+            setFormError('Please select whether the room is active or not.');
+            return;
+        }
+
+        try {
+            // Create a new room using the API
+            const room = await createRoom({
+                name: trimmedRoomName,
+                capacity: numericCapacity,
+                floor: numericFloor,
+                equipment,
+                isActive: active === 'Active',
+            });
+
+            // Add the new room to the state and reset the form fields
+            setRooms((currentRooms) => [...currentRooms, room]);
+            setRoomName('');
+            setCapacity('');
+            setFloor('');
+            setEquipment([]);
+            setActive('');
+            setFormError('');
+        } catch (error) {
+            // Check whether error is an instance of Error and set the form error message
+            setFormError(error instanceof Error ? error.message : 'Unable to add room.');
+        }
+    }
 
     return (
         <Container 
@@ -45,6 +106,7 @@ function Rooms() {
             gap: 1.5,
             }}
         >
+            <FormAlert message={formError} />
             <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
             Add a room:
             </Typography>
@@ -84,8 +146,20 @@ function Rooms() {
                 fullWidth
                 label="Equipment"
                 size="small"
-                //value={type}
-                //onChange={(event) => setType(event.target.value)}
+                value={equipment}
+                slotProps={{ select: { multiple: true } }}
+                onChange={(event) => {
+                    const selectedEquipment = event.target.value;
+                    const equipmentSelection = (
+                        typeof selectedEquipment === 'string'
+                            ? selectedEquipment.split(',') as Equipment[]
+                            : selectedEquipment as Equipment[]
+                    );
+
+                    if (equipmentSelection.length > 0) {
+                        setEquipment(equipmentSelection);
+                    }
+                }}
             >  
                 <MenuItem value="Projector">Projector</MenuItem>
                 <MenuItem value="TvScreen">Tv screen</MenuItem>
@@ -106,7 +180,7 @@ function Rooms() {
             </TextField>
             <Button
                 variant="contained"
-                //onClick={addUser}
+                onClick={addRoom}
                 sx={{
                     minWidth: { xs: '100%', md: 112 },
                     height: 40,
@@ -146,7 +220,6 @@ function Rooms() {
                     <TableCell>
                     <Button
                         variant="contained"
-                        //onClick={() => handleEdit(room.id)}
                         sx={{
                             minWidth: 80,
                             height: 30,
@@ -160,7 +233,6 @@ function Rooms() {
                     </Button>
                     <Button
                         variant="contained"
-                        //onClick={() => handleDelete(room.id)}
                         sx={{
                             minWidth: 80,
                             height: 30,
