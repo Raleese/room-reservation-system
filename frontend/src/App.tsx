@@ -1,6 +1,7 @@
 import { Routes, Route, Link } from 'react-router'
 import { AppBar, Toolbar, Typography, Button } from '@mui/material'
 import Home from './Pages/Home.tsx'
+import Rooms from './Pages/Rooms.tsx'
 
   const USER_PATH = "/users";
   const ROOMS_PATH = "/rooms";
@@ -70,6 +71,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path={ROOMS_PATH} element={<Rooms />} />
       </Routes>
     </>
   )
