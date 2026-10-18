@@ -171,9 +171,9 @@ function RoomForm({ onRoomCreated }: RoomFormProps) {
                     sx={{
                         minWidth: { xs: '100%', md: 112 },
                         height: 40,
-                        backgroundColor: '#9dacbe',
-                        '&:hover': { backgroundColor: '#bfdbfe' },
-                        color: 'black',
+                        backgroundColor: '#8f4f3e',
+                        '&:hover': { backgroundColor: '#b8644e' },
+                        color: '#fff4ec',
                     }}
                 >
                     Add Room

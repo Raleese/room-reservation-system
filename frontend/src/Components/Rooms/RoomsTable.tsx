@@ -15,14 +15,14 @@ function RoomsTable({ rooms, onRoomDeleted }: RoomsTableProps) {
         <TableContainer component={Paper}>
             <Table sx={{ tableLayout: 'fixed' }}>
                 <TableHead>
-                    <TableRow sx={{ backgroundColor: '#9dacbe' }}>
-                        <TableCell sx={{ width: '8%', color: 'black' }}>Room ID</TableCell>
-                        <TableCell sx={{ width: '20%', color: 'black' }}>Room Name</TableCell>
-                        <TableCell sx={{ width: '8%', color: 'black' }}>Capacity</TableCell>
-                        <TableCell sx={{ width: '8%', color: 'black' }}>Floor</TableCell>
-                        <TableCell sx={{ width: '34%', color: 'black' }}>Equipment</TableCell>
-                        <TableCell sx={{ width: '10%', color: 'black' }}>Active</TableCell>
-                        <TableCell sx={{ width: '12%', color: 'black' }}>Actions</TableCell>
+                    <TableRow sx={{ backgroundColor: '#8f4f3e' }}>
+                        <TableCell sx={{ width: '8%', color: '#fff4ec' }}>Room ID</TableCell>
+                        <TableCell sx={{ width: '20%', color: '#fff4ec' }}>Room Name</TableCell>
+                        <TableCell sx={{ width: '8%', color: '#fff4ec' }}>Capacity</TableCell>
+                        <TableCell sx={{ width: '8%', color: '#fff4ec' }}>Floor</TableCell>
+                        <TableCell sx={{ width: '34%', color: '#fff4ec' }}>Equipment</TableCell>
+                        <TableCell sx={{ width: '10%', color: '#fff4ec' }}>Active</TableCell>
+                        <TableCell sx={{ width: '12%', color: '#fff4ec' }}>Actions</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -72,9 +72,9 @@ function RoomsTable({ rooms, onRoomDeleted }: RoomsTableProps) {
                                     sx={{
                                         minWidth: 80,
                                         height: 30,
-                                        backgroundColor: '#9dacbe',
-                                        '&:hover': { backgroundColor: '#bfdbfe' },
-                                        color: 'black',
+                                        backgroundColor: '#8f4f3e',
+                                        '&:hover': { backgroundColor: '#b8644e' },
+                                        color: '#fff4ec',
                                     }}
                                 >
                                     Delete

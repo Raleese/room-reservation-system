@@ -27,9 +27,9 @@ function App() {
             component={Link}
             to={HOME_PATH}
             sx={{
-              backgroundColor: '#9dacbe',
-              '&:hover': { backgroundColor: '#bfdbfe' },
-              color: 'black',
+              backgroundColor: '#8f4f3e',
+              '&:hover': { backgroundColor: '#b8644e' },
+              color: '#fff4ec',
             }}
           >
             Home
@@ -38,9 +38,9 @@ function App() {
             component={Link}
             to={USERS_PATH}
             sx={{
-              backgroundColor: '#9dacbe',
-              '&:hover': { backgroundColor: '#bfdbfe' },
-              color: 'black',
+              backgroundColor: '#8f4f3e',
+              '&:hover': { backgroundColor: '#b8644e' },
+              color: '#fff4ec',
             }}
           >
             Users
@@ -49,9 +49,9 @@ function App() {
             component={Link}
             to={ROOMS_PATH}
             sx={{
-              backgroundColor: '#9dacbe',
-              '&:hover': { backgroundColor: '#bfdbfe' },
-              color: 'black',
+              backgroundColor: '#8f4f3e',
+              '&:hover': { backgroundColor: '#b8644e' },
+              color: '#fff4ec',
             }}
           >
             Meeting rooms
@@ -60,9 +60,9 @@ function App() {
             component={Link}
             to={RESERVATIONS_PATH}
             sx={{
-              backgroundColor: '#9dacbe',
-              '&:hover': { backgroundColor: '#bfdbfe' },
-              color: 'black',
+              backgroundColor: '#8f4f3e',
+              '&:hover': { backgroundColor: '#b8644e' },
+              color: '#fff4ec',
             }}
           >
             Reservations
