@@ -176,7 +176,7 @@ function RoomForm({ onRoomCreated }: RoomFormProps) {
                         color: '#fff4ec',
                     }}
                 >
-                    Add Room
+                    Add
                 </Button>
             </Box>
         </Paper>
