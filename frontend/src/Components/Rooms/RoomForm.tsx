@@ -83,6 +83,7 @@ function RoomForm({ onRoomCreated }: RoomFormProps) {
             setFormError(error instanceof Error ? error.message : 'Unable to add room.');
         }
     };
+
     return (
         <Paper
             sx={{
@@ -141,10 +142,7 @@ function RoomForm({ onRoomCreated }: RoomFormProps) {
                         const equipmentSelection = typeof selectedEquipment === 'string'
                             ? selectedEquipment.split(',') as Equipment[]
                             : selectedEquipment as Equipment[];
-
-                        if (equipmentSelection.length > 0) {
-                            setEquipment(equipmentSelection);
-                        }
+                        setEquipment(equipmentSelection);
                     }}
                 >
                     {EQUIPMENT_OPTIONS.map((option) => (
