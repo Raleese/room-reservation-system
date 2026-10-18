@@ -13,34 +13,22 @@ public class RoomsController (IRoomService rooms) : ControllerBase
     [HttpPost]
     public async Task<ActionResult<RoomDTO>> Create(CreateRoomDTO createRoomDTO)
     {
-        if (string.IsNullOrWhiteSpace(createRoomDTO.Name))
+        try
         {
-            return BadRequest("Room name is required.");
-        }
+            var createdRoom = await rooms.CreateAsync(createRoomDTO);
+            if (createdRoom is null)
+            {
+                return Conflict("A room with this name already exists.");
+            }
 
-        if (createRoomDTO.Capacity <= 0)
+            return Created("/api/rooms", createdRoom);
+        }
+        catch (ArgumentException error)
         {
-            return BadRequest("Capacity must be greater than zero.");
+            return BadRequest(error.Message);
         }
-
-        if (createRoomDTO.Floor < 0)
-        {
-            return BadRequest("Floor cannot be negative.");
-        }
-
-        if (createRoomDTO.Equipment is null || createRoomDTO.Equipment.Length == 0)
-        {
-            return BadRequest("At least one equipment item must be selected.");
-        }
-
-        var createdRoom = await rooms.CreateAsync(createRoomDTO);
-        if (createdRoom is null)
-        {
-            return Conflict("A room with this name already exists.");
-        }
-
-        return Created("/api/rooms", createdRoom);
     }
+    
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete(int id)
     {
