@@ -1,17 +1,25 @@
 import { Container, Pagination, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { getRooms } from '../Api/RoomApi.ts';
-import FormAlert from '../Components/FormAlert.tsx';
-import RoomForm from '../Components/RoomForm.tsx';
-import RoomsTable from '../Components/RoomsTable.tsx';
-import type { Room } from '../Types/system_types.ts';
+import FormAlert from '../Components/Shared/FormAlert.tsx';
+import RoomForm from '../Components/Rooms/RoomForm.tsx';
+import RoomFilters from '../Components/Rooms/RoomFilters.tsx';
+import RoomsTable from '../Components/Rooms/RoomsTable.tsx';
+import type { Room, RoomFilter } from '../Types/system_types.ts';
+
+const EMPTY_ROOM_FILTER: RoomFilter = {
+    minimumCapacity: null,
+    equipment: [],
+    floor: null,
+};
 
 function Rooms() {
     const [rooms, setRooms] = useState<Room[]>([]);
     const [loadError, setLoadError] = useState('');
+    const [filters, setFilters] = useState<RoomFilter>(EMPTY_ROOM_FILTER);
 
     useEffect(() => {
-        getRooms()
+        getRooms(filters)
             .then((data) => {
                 setRooms(data);
                 setLoadError('');
@@ -20,7 +28,7 @@ function Rooms() {
                 console.error('Error fetching rooms: ', error);
                 setLoadError(error instanceof Error ? error.message : 'Unable to load rooms.');
             });
-    }, []);
+    }, [filters]);
 
     return (
         <Container
@@ -35,8 +43,18 @@ function Rooms() {
             <Typography variant="h4" gutterBottom>
                 Rooms
             </Typography>
-            <RoomForm onRoomCreated={(room) => setRooms((currentRooms) => [...currentRooms, room])} />
+            <RoomForm
+                onRoomCreated={() => {
+                    getRooms(filters)
+                        .then((data) => setRooms(data))
+                        .catch((error) => {
+                            console.error('Error refreshing rooms: ', error);
+                            setLoadError(error instanceof Error ? error.message : 'Unable to refresh rooms.');
+                        });
+                }}
+            />
             <FormAlert message={loadError} />
+            <RoomFilters onFiltersChange={setFilters} />
             <RoomsTable rooms={rooms} />
             <Container
                 sx={{
