@@ -1,4 +1,4 @@
-import type { Room, CreateRoom } from '../Types/system_types';
+import type { CreateRoom, Room, RoomFilter } from '../Types/system_types';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const ROOMS_ENDPOINT = '/rooms';
@@ -21,8 +21,23 @@ async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
 }
 
 // Get all rooms
-export function getRooms(): Promise<Room[]> {
-    return requestJson<Room[]>(ROOMS_ENDPOINT);
+export function getRooms(filters?: RoomFilter): Promise<Room[]> {
+  const query = new URLSearchParams();
+
+  if (filters?.minimumCapacity !== null && filters?.minimumCapacity !== undefined) {
+    query.set('MinimumCapacity', filters.minimumCapacity.toString());
+  }
+
+  filters?.equipment.forEach((equipment) => query.append('Equipment', equipment));
+
+  if (filters?.floor !== null && filters?.floor !== undefined) {
+    query.set('Floor', filters.floor.toString());
+  }
+
+  const queryString = query.toString();
+  return requestJson<Room[]>(
+    `${ROOMS_ENDPOINT}${queryString ? `?${queryString}` : ''}`,
+  );
 }
 
 // Create a new room
