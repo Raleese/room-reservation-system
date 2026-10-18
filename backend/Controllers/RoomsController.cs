@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 public class RoomsController (IRoomService rooms) : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<List<RoomDTO>>> Get()
+    public async Task<ActionResult<List<RoomDTO>>> Get([FromQuery] RoomFilterDTO? filter = null)
     {
-        return Ok(await rooms.GetAllAsync());
+        return Ok(await rooms.GetAllAsync(filter));
     }
 
     [HttpPost]
