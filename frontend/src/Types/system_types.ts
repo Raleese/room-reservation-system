@@ -15,6 +15,12 @@ export type CreateRoom = {
     isActive: boolean
 }
 
+export type RoomFilter = {
+    minimumCapacity: number | null,
+    equipment: Equipment[],
+    floor: number | null
+}
+
 export type Equipment =
     | "Projector"
     | "TvScreen"
@@ -27,4 +33,12 @@ export type FormAlertProps = {
 
 export type RoomFormProps = {
     onRoomCreated: (room: Room) => void;
+};
+
+export type RoomFiltersProps = {
+    onFiltersChange: (filters: RoomFilter) => void;
+};
+
+export type RoomsTableProps = {
+    rooms: Room[];
 };
