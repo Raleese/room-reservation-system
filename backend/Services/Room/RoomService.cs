@@ -81,4 +81,17 @@ public class RoomService(AppDbContext db) : IRoomService
                 .ToArray(),
             room.IsActive);
     }
+
+    public async Task<bool> DeleteAsync(int id)
+    {
+        var room = await db.Rooms.FindAsync(id);
+        if (room == null)
+        {
+            return false;
+        }
+
+        db.Rooms.Remove(room);
+        await db.SaveChangesAsync();
+        return true;
+    }
 }
