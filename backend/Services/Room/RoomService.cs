@@ -42,6 +42,26 @@ public class RoomService(AppDbContext db) : IRoomService
 
     public async Task<RoomDTO?> CreateAsync(CreateRoomDTO dto)
     {
+        if (string.IsNullOrWhiteSpace(dto.Name))
+        {
+            throw new ArgumentException("Room name is required.");
+        }
+
+        if (dto.Capacity <= 0)
+        {
+            throw new ArgumentException("Capacity must be greater than zero.");
+        }
+
+        if (dto.Floor < 0)
+        {
+            throw new ArgumentException("Floor cannot be negative.");
+        }
+
+        if (dto.Equipment is null || dto.Equipment.Length == 0)
+        {
+            throw new ArgumentException("At least one equipment item must be selected.");
+        }
+
         var roomName = dto.Name.Trim();
         var normalizedRoomName = roomName.ToUpper();
 
