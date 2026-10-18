@@ -24,13 +24,17 @@ async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
 export function getRooms(filters?: RoomFilter): Promise<Room[]> {
   const query = new URLSearchParams();
 
-  if (filters?.minimumCapacity !== null && filters?.minimumCapacity !== undefined) {
+  if (filters?.minimumCapacity != null) {
     query.set('MinimumCapacity', filters.minimumCapacity.toString());
   }
 
-  filters?.equipment.forEach((equipment) => query.append('Equipment', equipment));
+  if (filters?.equipment != null) {
+    filters.equipment.forEach((equipment) => {
+      query.append('Equipment', equipment);
+    });
+  }
 
-  if (filters?.floor !== null && filters?.floor !== undefined) {
+  if (filters?.floor != null) {
     query.set('Floor', filters.floor.toString());
   }
 
@@ -46,5 +50,12 @@ export function createRoom(createRoomDTO: CreateRoom): Promise<Room> {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(createRoomDTO)
+  });
+}
+
+// Delete a room by ID
+export function deleteRoom(roomId: number): Promise<void> {
+  return requestJson<void>(`${ROOMS_ENDPOINT}/${roomId}`, {
+    method: 'DELETE',
   });
 }
