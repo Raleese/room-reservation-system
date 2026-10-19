@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import { getReservations } from '../Api/ReservationApi.ts';
 import FormAlert from '../Components/Shared/FormAlert.tsx';
 import ReservationsTable from '../Components/Reservations/ReservationsTable.tsx';
-import type { Reservation } from '../Types/system_types.ts';
+import type { Reservation } from '../Types/reservation_types.ts';
+import ReservationForm from '../Components/Reservations/ReservationForm.tsx';
 
 const USERS_PER_PAGE = 5;
 
@@ -48,6 +49,16 @@ function Reservations() {
             <Typography variant="h4" gutterBottom>
                 Reservations
             </Typography>
+            <ReservationForm
+                onReservationCreated={() => {
+                    getReservations()
+                        .then((data) => setReservations(data))
+                        .catch((error) => {
+                            console.error('Error refreshing reservations: ', error);
+                            setLoadError(error instanceof Error ? error.message : 'Unable to refresh reservations.');
+                        });
+                }}
+            />
             <FormAlert message={loadError} />
             <ReservationsTable
                 reservations={visibleUReservations}
