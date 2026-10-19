@@ -2,6 +2,7 @@ import { Routes, Route, Link } from 'react-router'
 import { AppBar, Toolbar, Typography, Button } from '@mui/material'
 import Home from './Pages/Home.tsx'
 import Rooms from './Pages/Rooms.tsx'
+import Users from './Pages/Users.tsx'
 
 const HOME_PATH = "/";
 const USERS_PATH = '/users';
@@ -73,6 +74,7 @@ function App() {
       <Routes>
         <Route path={HOME_PATH} element={<Home />} />
         <Route path={ROOMS_PATH} element={<Rooms />} />
+        <Route path={USERS_PATH} element={<Users />} />
       </Routes>
     </>
   )
