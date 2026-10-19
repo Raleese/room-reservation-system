@@ -21,6 +21,13 @@ export type RoomFilter = {
     floor: number | null
 }
 
+export type  User = {
+    id: number,
+    firstName: string,
+    lastName: string,
+    activeReservations: number;
+}
+
 export type Equipment =
     | "Projector"
     | "TvScreen"
@@ -43,3 +50,7 @@ export type RoomsTableProps = {
     rooms: Room[];
     onRoomDeleted: (roomId: number) => void;
 };
+
+export type UsersTableProps = {
+    users: User[];
+}
