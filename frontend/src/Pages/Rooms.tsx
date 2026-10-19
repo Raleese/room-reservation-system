@@ -13,7 +13,7 @@ const EMPTY_ROOM_FILTER: RoomFilter = {
     floor: null,
 };
 
-const ROOMS_PER_PAGE = 5;
+const ROOMS_PER_PAGE = 8;
 
 function Rooms() {
     const [rooms, setRooms] = useState<Room[]>([]);
