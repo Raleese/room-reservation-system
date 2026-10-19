@@ -1,6 +1,6 @@
 import { Box, Button, MenuItem, Paper, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
-import type { Equipment, RoomFormProps } from '../../Types/system_types.ts';
+import type { Equipment, RoomFormProps } from '../../Types/room_types.ts';
 import { createRoom } from '../../Api/RoomApi.ts';
 import FormAlert from '../Shared/FormAlert.tsx';
 

@@ -1,6 +1,6 @@
 import { Box, MenuItem, TextField } from '@mui/material';
 import { useState } from 'react';
-import type { Equipment, RoomFiltersProps } from '../../Types/system_types.ts';
+import type { Equipment, RoomFiltersProps } from '../../Types/room_types.ts';
 
 const EQUIPMENT_OPTIONS: { value: Equipment; label: string }[] = [
     { value: 'Projector', label: 'Projector' },
