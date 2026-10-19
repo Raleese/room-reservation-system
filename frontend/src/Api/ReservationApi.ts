@@ -1,7 +1,7 @@
-import type { Reservation } from '../Types/system_types';
+import type { Reservation, CreateReservation } from '../Types/reservation_types.ts';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-const USERS_ENDPOINT = '/reservations';
+const RESERVATIONS_ENDPOINT = '/reservations';
 
 // Helper function to make API requests and handle JSON responses
 async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
@@ -23,6 +23,16 @@ async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
 // Get all users
 export function getReservations(): Promise<Reservation[]> {
   return requestJson<Reservation[]>(
-    USERS_ENDPOINT
+    RESERVATIONS_ENDPOINT
   );
+}
+
+export function createReservation(reservation: CreateReservation): Promise<Reservation> {
+  return requestJson<Reservation>(
+    RESERVATIONS_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(reservation)      
+    }
+  )
 }
