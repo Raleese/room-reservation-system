@@ -1,5 +1,5 @@
 import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material';
-import type { ReservationsTableProps } from '../../Types/system_types.ts';
+import type { ReservationsTableProps } from '../../Types/reservation_types.ts';
 
 const ROW_HEIGHT = 52;
 
