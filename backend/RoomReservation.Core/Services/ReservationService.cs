@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-public class ReservationService(AppDbContext db) : IReservationService
+public class ReservationService(IAppDbContext db) : IReservationService
 {
     public async Task<List<ReservationDTO>> GetAllAsync(ReservationFilterDTO? filter = null)
     {

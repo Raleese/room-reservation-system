@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-public class RoomService(AppDbContext db) : IRoomService
+public class RoomService(IAppDbContext db) : IRoomService
 {
     public async Task<List<RoomDTO>> GetAllAsync(RoomFilterDTO? filter = null)
     {

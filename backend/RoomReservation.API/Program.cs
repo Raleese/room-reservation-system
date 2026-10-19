@@ -22,6 +22,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped<IRoomService, RoomService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IReservationService, ReservationService>();
+builder.Services.AddScoped<IAppDbContext>(serviceProvider => serviceProvider.GetRequiredService<AppDbContext>());
 
 builder.Services.AddControllers().AddJsonOptions(o => 
     o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
