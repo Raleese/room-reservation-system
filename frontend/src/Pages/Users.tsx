@@ -23,7 +23,7 @@ function Users() {
                 console.error('Error fetching users: ', error);
                 setLoadError(error instanceof Error ? error.message : 'Unable to load users.');
             });
-    });
+    }, []);
 
     useEffect(() => {
         const lastPage = Math.max(1, Math.ceil(users.length / USERS_PER_PAGE));
@@ -31,7 +31,7 @@ function Users() {
     }, [users.length]);
 
     const pageCount = Math.ceil(users.length / USERS_PER_PAGE);
-    const visibleRooms = users.slice(
+    const visibleUsers = users.slice(
         (page - 1) * USERS_PER_PAGE,
         page * USERS_PER_PAGE,
     );
@@ -51,7 +51,7 @@ function Users() {
             </Typography>
             <FormAlert message={loadError} />
             <UsersTable
-                users={visibleRooms}
+                users={visibleUsers}
             />
             {pageCount > 1 ? (
                 <Container

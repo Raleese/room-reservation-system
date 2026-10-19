@@ -55,7 +55,7 @@ function Rooms() {
             }}
         >
             <Typography variant="h4" gutterBottom>
-                Rooms
+                Meeting rooms
             </Typography>
             <RoomForm
                 onRoomCreated={() => {
