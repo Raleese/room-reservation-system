@@ -1,0 +1,26 @@
+.room-calendar {
+  --fc-classic-button: #292e31;
+  --fc-classic-button-border: #383a38;
+  --fc-classic-button-strong: #e07a5f;
+  --fc-classic-button-strong-border: #e07a5f;
+  --fc-classic-button-outline: #e07a5f66;
+  --fc-classic-button-foreground: #f4efe7;
+
+  --fc-classic-primary: #e07a5f;
+  --fc-classic-primary-foreground: #1c1110;
+  --fc-classic-event: #e07a5f;
+  --fc-classic-event-contrast: #1c1110;
+  --fc-classic-highlight: #a8c68633;
+  --fc-classic-today: #e07a5f1f;
+  --fc-classic-now: #a8c686;
+
+  --fc-classic-background: #1b1f22;
+  --fc-classic-faint: #ffffff08;
+  --fc-classic-muted: #ffffff12;
+  --fc-classic-strong: #ffffff1f;
+  --fc-classic-foreground: #f4efe7;
+  --fc-classic-faint-foreground: #85827d;
+  --fc-classic-muted-foreground: #b9b3aa;
+  --fc-classic-border: #383a38;
+  --fc-classic-strong-border: #555650;
+}
