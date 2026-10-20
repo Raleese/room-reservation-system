@@ -20,4 +20,18 @@ public class ReservationsController (IReservationService reservations) : Control
         }
         return Created("/api/reservations", reservation);
     }
+
+    [HttpPatch("{id}/cancel")]
+    public async Task<ActionResult> Cancel([FromRoute] int id)
+    {
+        var canceled = await reservations.CancelAsync(id);
+        return canceled ? Ok() : NotFound();
+    }
+
+    [HttpPatch("{id}/complete")]
+    public async Task<ActionResult> Complete([FromRoute] int id)
+    {
+        var completed = await reservations.CompleteAsync(id);
+        return completed ? Ok() : NotFound();
+    }
 }
