@@ -20,6 +20,14 @@ export type CreateReservation = {
     numberOfAttendees: number,
 }
 
+export type ReservationFilter = {
+    roomId: number | null,
+    organizerId: number | null,
+    status: ReservationStatus | null,
+    startDate: Date | null,
+    endDate: Date | null
+}
+
 export type ReservationStatus =
     | "Booked"
     | "Completed"
@@ -31,4 +39,8 @@ export type ReservationsTableProps = {
 
 export type ReservationFormProps = {
     onReservationCreated: (reservation: Reservation) => void;
+};
+
+export type ReservationFiltersProps = {
+    onFiltersChange: (filters: ReservationFilter) => void;
 };
