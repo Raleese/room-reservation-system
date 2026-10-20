@@ -1,5 +1,5 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material';
-import type { UsersTableProps } from '../../Types/system_types.ts';
+import type { UsersTableProps } from '../../Types/user_types.ts';
 
 const ROW_HEIGHT = 52;
 
