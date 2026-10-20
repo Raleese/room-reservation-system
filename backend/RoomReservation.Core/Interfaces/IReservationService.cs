@@ -1,4 +1,5 @@
 public interface IReservationService
 {
-    Task<List<ReservationDTO>> GetAllAsync(ReservationFilterDTO? filter = null); 
+    Task<List<ReservationDTO>> GetAllAsync(ReservationFilterDTO? filter = null);
+    Task<(ReservationDTO? Reservation, string? Error)> CreateAsync(CreateReservationDTO dto);
 }
