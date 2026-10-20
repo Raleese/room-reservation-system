@@ -6,13 +6,14 @@ const DATE_FORMATTER = new Intl.DateTimeFormat('lt-LT', {
     dateStyle: 'short',
     timeStyle: 'short',
 });
+const BOOKED_STATUS = 'Booked';
 
 function formatDate(value: Date) {
     const date = new Date(value);
     return Number.isNaN(date.getTime()) ? 'Invalid date' : DATE_FORMATTER.format(date);
 }
 
-function ReservationsTable({ reservations }: ReservationsTableProps) {
+function ReservationsTable({ reservations, onReservationCancelled, onReservationCompleted }: ReservationsTableProps) {
     return (
         <TableContainer component={Paper}>
             <Table sx={{ tableLayout: 'fixed' }}>
@@ -31,7 +32,7 @@ function ReservationsTable({ reservations }: ReservationsTableProps) {
                 </TableHead>
                 <TableBody>
                     {reservations.map((reservation) => (
-                        <TableRow key={reservation.meetingTitle} sx={{ height: ROW_HEIGHT }}>
+                        <TableRow key={reservation.id} sx={{ height: ROW_HEIGHT }}>
                             <TableCell
                                 sx={{
                                     overflow: 'hidden',
@@ -97,9 +98,10 @@ function ReservationsTable({ reservations }: ReservationsTableProps) {
                             <TableCell>{reservation.numberOfAttendees}</TableCell>
                             <TableCell>{reservation.status}</TableCell>
                             <TableCell>
+                                {reservation.status === BOOKED_STATUS && <>
                                 <Button
                                     variant="contained"
-                                    //onClick={() => onRoomDeleted(room.id)}
+                                    onClick={() => onReservationCancelled(reservation.id)}
                                     sx={{
                                         minWidth: 80,
                                         height: 30,
@@ -112,7 +114,7 @@ function ReservationsTable({ reservations }: ReservationsTableProps) {
                                 </Button>
                                 <Button
                                     variant="contained"
-                                    //onClick={() => onRoomDeleted(room.id)}
+                                    onClick={() => onReservationCompleted(reservation.id)}
                                     sx={{
                                         minWidth: 80,
                                         height: 30,
@@ -123,6 +125,7 @@ function ReservationsTable({ reservations }: ReservationsTableProps) {
                                 >
                                     End
                                 </Button>
+                                </>}
                             </TableCell>
                         </TableRow>
                     ))}
