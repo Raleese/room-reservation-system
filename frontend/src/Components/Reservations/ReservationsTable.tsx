@@ -2,6 +2,15 @@ import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, 
 import type { ReservationsTableProps } from '../../Types/reservation_types.ts';
 
 const ROW_HEIGHT = 52;
+const DATE_FORMATTER = new Intl.DateTimeFormat('lt-LT', {
+    dateStyle: 'short',
+    timeStyle: 'short',
+});
+
+function formatDate(value: Date) {
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? 'Invalid date' : DATE_FORMATTER.format(date);
+}
 
 function ReservationsTable({ reservations }: ReservationsTableProps) {
     return (
@@ -83,8 +92,8 @@ function ReservationsTable({ reservations }: ReservationsTableProps) {
                                     </span>
                                 </Tooltip>
                             </TableCell>
-                            <TableCell>{reservation.startDate.toString()}</TableCell>
-                            <TableCell>{reservation.endDate.toString()}</TableCell>
+                            <TableCell>{formatDate(reservation.startDate)}</TableCell>
+                            <TableCell>{formatDate(reservation.endDate)}</TableCell>
                             <TableCell>{reservation.numberOfAttendees}</TableCell>
                             <TableCell>{reservation.status}</TableCell>
                             <TableCell>
