@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 
+namespace RoomReservation.API.Controllers;
+
 [ApiController]
 [Route("api/users")]
 public class UsersController(IUserService users) : ControllerBase

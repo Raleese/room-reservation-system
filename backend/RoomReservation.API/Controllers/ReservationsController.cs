@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 
+namespace RoomReservation.API.Controllers;
+
 [ApiController]
 [Route("api/reservations")]
 public class ReservationsController (IReservationService reservations) : ControllerBase

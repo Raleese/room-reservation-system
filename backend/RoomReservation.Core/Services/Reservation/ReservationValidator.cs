@@ -2,6 +2,8 @@ using System.Runtime.CompilerServices;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
+namespace RoomReservation.Core.Services.Reservations;
+
 public class ReservationValidator(IAppDbContext db, IOptions<BookingOptions> options)
 {
     private readonly BookingOptions opt = options.Value;
@@ -95,3 +97,4 @@ public class ReservationValidator(IAppDbContext db, IOptions<BookingOptions> opt
         return null;
     }
 }
+

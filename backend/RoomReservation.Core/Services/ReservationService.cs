@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
+namespace RoomReservation.Core.Services;
+
 public class ReservationService(IAppDbContext db, ReservationValidator validator) : IReservationService
 {
     public async Task<List<ReservationDTO>> GetAllAsync(ReservationFilterDTO? filter = null)

@@ -1,3 +1,5 @@
+namespace RoomReservation.Domain.Entities;
+
 public class Room
 {
     public int Id { get; set; }

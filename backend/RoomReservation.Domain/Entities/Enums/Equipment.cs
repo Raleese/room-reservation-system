@@ -1,3 +1,5 @@
+namespace RoomReservation.Domain.Entities.Enums;
+
 [Flags]
 public enum Equipment
 {

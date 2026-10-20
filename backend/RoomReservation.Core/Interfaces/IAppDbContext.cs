@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
+namespace RoomReservation.Core.Interfaces;
+
 public interface IAppDbContext
 {
     DbSet<Room> Rooms { get; }

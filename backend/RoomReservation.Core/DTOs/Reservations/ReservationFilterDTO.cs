@@ -1,3 +1,5 @@
+namespace RoomReservation.Core.DTOs.Reservations;
+
 public record ReservationFilterDTO
 (
     int? RoomId,
