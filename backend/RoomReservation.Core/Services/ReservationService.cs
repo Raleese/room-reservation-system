@@ -120,4 +120,31 @@ public class ReservationService(IAppDbContext db, ReservationValidator validator
 
         return (reservationDto, null);
     }
+
+    public async Task<bool> CancelAsync(int reservationId)
+    {
+        var reservation = await db.Reservations.FindAsync(reservationId);
+        if (reservation is null || reservation.Status != ReservationStatus.Booked)
+        {
+            return false;
+        }
+
+        reservation.Status = ReservationStatus.Cancelled;
+        await db.SaveChangesAsync();
+        return true;
+    }
+
+    public async Task<bool> CompleteAsync(int reservationId)
+    {
+        var reservation = await db.Reservations.FindAsync(reservationId);
+        if (reservation is null || reservation.Status != ReservationStatus.Booked)
+        {
+            return false;
+        }
+
+        reservation.Status = ReservationStatus.Completed;
+        reservation.EndDate = DateTime.UtcNow;
+        await db.SaveChangesAsync();
+        return true;
+    }
 }
