@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="RoomReservation.API/RoomReservation.API.csproj" />
+  <Project Path="RoomReservation.Core/RoomReservation.Core.csproj" />
+  <Project Path="RoomReservation.Domain/RoomReservation.Domain.csproj" />
+  <Project Path="RoomReservation.Infrastructure/RoomReservation.Infrastructure.csproj" />
+</Solution>

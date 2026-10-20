@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-public class UserService(AppDbContext db) : IUserService
+public class UserService(IAppDbContext db) : IUserService
 {
     public async Task<List<UserDTO>> GetAllAsync()
     {

@@ -1,5 +1,5 @@
 import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material';
-import type { Equipment, RoomsTableProps } from '../../Types/system_types.ts';
+import type { Equipment, RoomsTableProps } from '../../Types/room_types.ts';
 
 const ROW_HEIGHT = 52;
 

@@ -8,7 +8,12 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.13" />
+    <PackageReference Include="Microsoft.OpenApi" Version="2.7.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RoomReservation.Core\RoomReservation.Core.csproj" />
+    <ProjectReference Include="..\RoomReservation.Infrastructure\RoomReservation.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

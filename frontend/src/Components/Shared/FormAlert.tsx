@@ -1,5 +1,5 @@
 import { Alert } from '@mui/material';
-import type { FormAlertProps } from '../../Types/system_types.ts';
+import type { FormAlertProps } from '../../Types/shared_types.ts';
 
 function FormAlert({ message }: FormAlertProps) {
     if (!message) {

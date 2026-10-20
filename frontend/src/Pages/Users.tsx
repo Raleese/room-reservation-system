@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { getUsers } from '../Api/UserApi.ts';
 import FormAlert from '../Components/Shared/FormAlert.tsx';
 import UsersTable from '../Components/Users/UsersTable.tsx';
-import type { User } from '../Types/system_types.ts';
+import type { User } from '../Types/user_types.ts';
 
 
 const USERS_PER_PAGE = 5;

@@ -5,7 +5,7 @@ import FormAlert from '../Components/Shared/FormAlert.tsx';
 import RoomForm from '../Components/Rooms/RoomForm.tsx';
 import RoomFilters from '../Components/Rooms/RoomFilters.tsx';
 import RoomsTable from '../Components/Rooms/RoomsTable.tsx';
-import type { Room, RoomFilter } from '../Types/system_types.ts';
+import type { Room, RoomFilter } from '../Types/room_types.ts';
 
 const EMPTY_ROOM_FILTER: RoomFilter = {
     minimumCapacity: null,

@@ -1,4 +1,4 @@
-import type { User } from '../Types/system_types';
+import type { User } from '../Types/user_types.ts';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const USERS_ENDPOINT = '/users';
