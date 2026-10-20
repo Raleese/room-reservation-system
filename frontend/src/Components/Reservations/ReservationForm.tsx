@@ -31,13 +31,13 @@ function ReservationForm({ onReservationCreated }: ReservationFormProps) {
         const numericNumberOfAttendees = Number(numberOfAttendees);
 
         // Is a room selected?
-        if (!roomId.trim() || !Number.isInteger(numericRoomId) || numericRoomId <= 0) {
+        if (!Number.isInteger(numericRoomId) || numericRoomId <= 0) {
             setFormError('Select a room.');
             return;
         }
 
         // Is an organizer selected?
-        if (!organizerId.trim() || !Number.isInteger(numericOrganizerId) || numericOrganizerId <= 0) {
+        if (!Number.isInteger(numericOrganizerId) || numericOrganizerId <= 0) {
             setFormError('Select an organizer.');
             return;
         }
