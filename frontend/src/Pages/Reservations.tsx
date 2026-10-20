@@ -1,6 +1,6 @@
 import { Container, Pagination, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { getReservations } from '../Api/ReservationApi.ts';
+import { getReservations, cancelReservation, completeReservation } from '../Api/ReservationApi.ts';
 import FormAlert from '../Components/Shared/FormAlert.tsx';
 import ReservationsTable from '../Components/Reservations/ReservationsTable.tsx';
 import type { Reservation, ReservationFilter } from '../Types/reservation_types.ts';
@@ -41,7 +41,7 @@ function Reservations() {
     }, [reservations.length]);
 
     const pageCount = Math.ceil(reservations.length / USERS_PER_PAGE);
-    const visibleUReservations = reservations.slice(
+    const visibleReservations = reservations.slice(
         (page - 1) * USERS_PER_PAGE,
         page * USERS_PER_PAGE,
     );
@@ -77,7 +77,37 @@ function Reservations() {
                 }}
             />
             <ReservationsTable
-                reservations={visibleUReservations}
+                reservations={visibleReservations}
+                onReservationCancelled={(reservationId) => {
+                    cancelReservation(reservationId)
+                        .then(() => {
+                            // Refresh the reservations list after cancellation
+                            return getReservations(filters);
+                        })
+                        .then((data) => {
+                            // Update the reservations state with the refreshed data
+                            setReservations(data);
+                        })
+                        .catch((error) => {
+                            console.error('Error cancelling reservation: ', error);
+                            setLoadError(error instanceof Error ? error.message : 'Unable to cancel reservation.');
+                        });
+                }}
+                onReservationCompleted={(reservationId) => {
+                    completeReservation(reservationId)
+                        .then(() => {
+                            // Refresh the reservations list after completion
+                            return getReservations(filters);
+                        })
+                        .then((data) => {
+                            // Update the reservations state with the refreshed data
+                            setReservations(data);
+                        })
+                        .catch((error) => {
+                            console.error('Error completing reservation: ', error);
+                            setLoadError(error instanceof Error ? error.message : 'Unable to complete reservation.');
+                        });
+                }}
             />
             {pageCount > 1 ? (
                 <Container
