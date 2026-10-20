@@ -10,7 +10,7 @@ const EQUIPMENT_OPTIONS: { value: Equipment; label: string }[] = [
     { value: 'Whiteboard', label: 'Whiteboard' },
 ];
 
-function RoomsTable({ rooms, onRoomDeleted }: RoomsTableProps) {
+function RoomsTable({ rooms, onRoomDeleted, onRoomCalendarClicked }: RoomsTableProps) {
     return (
         <TableContainer component={Paper}>
             <Table sx={{ tableLayout: 'fixed' }}>
@@ -78,6 +78,19 @@ function RoomsTable({ rooms, onRoomDeleted }: RoomsTableProps) {
                                     }}
                                 >
                                     Delete
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    onClick={() => onRoomCalendarClicked(room.id)}
+                                    sx={{
+                                        minWidth: 80,
+                                        height: 30,
+                                        backgroundColor: '#8f4f3e',
+                                        '&:hover': { backgroundColor: '#b8644e' },
+                                        color: '#fff4ec',
+                                    }}
+                                >
+                                    Calendar
                                 </Button>
                             </TableCell>
                         </TableRow>
