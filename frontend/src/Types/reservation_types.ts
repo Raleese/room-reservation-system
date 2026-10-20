@@ -36,6 +36,8 @@ export type ReservationStatus =
 
 export type ReservationsTableProps = {
     reservations: Reservation[];
+    onReservationCancelled: (reservationId: number) => void;
+    onReservationCompleted: (reservationId: number) => void;
 }
 
 export type ReservationFormProps = {
