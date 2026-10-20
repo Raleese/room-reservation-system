@@ -1,10 +1,11 @@
-import { Container, Pagination, Typography } from '@mui/material';
+import { Container, Modal, Pagination, Typography, Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { deleteRoom, getRooms } from '../Api/RoomApi.ts';
 import FormAlert from '../Components/Shared/FormAlert.tsx';
 import RoomForm from '../Components/Rooms/RoomForm.tsx';
 import RoomFilters from '../Components/Rooms/RoomFilters.tsx';
 import RoomsTable from '../Components/Rooms/RoomsTable.tsx';
+import RoomCalendar from '../Components/Rooms/RoomCalendar.tsx';
 import type { Room, RoomFilter } from '../Types/room_types.ts';
 
 const EMPTY_ROOM_FILTER: RoomFilter = {
@@ -20,6 +21,11 @@ function Rooms() {
     const [loadError, setLoadError] = useState('');
     const [filters, setFilters] = useState<RoomFilter>(EMPTY_ROOM_FILTER);
     const [page, setPage] = useState(1);
+    const [selectedRoomId, setSelectedRoomId] = useState<number | null>(null);
+
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     useEffect(() => {
         getRooms(filters)
@@ -88,7 +94,30 @@ function Rooms() {
                             setLoadError(error instanceof Error ? error.message : 'Unable to delete room.');
                         });
                 }}
+                onRoomCalendarClicked={(roomId) => {
+                    setSelectedRoomId(roomId);
+                    setOpen(true);
+                }}
             />
+            <Modal open={open} onClose={handleClose}>
+                <Box
+                    sx={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: '90%',
+                        maxWidth: 1000,
+                        maxHeight: '90vh',
+                        overflow: 'auto',
+                        bgcolor: 'background.paper',
+                        p: 2,
+                        borderRadius: 2,
+                    }}
+                >
+                    {selectedRoomId !== null && <RoomCalendar roomId={selectedRoomId} />}
+                </Box>
+            </Modal>
             {pageCount > 1 ? (
                 <Container
                     sx={{
