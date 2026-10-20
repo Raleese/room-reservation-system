@@ -5,13 +5,34 @@ const RESERVATIONS_ENDPOINT = '/reservations';
 const CANCEL_RESERVATION_ENDPOINT = '/cancel';
 const COMPLETE_RESERVATION_ENDPOINT = '/complete';
 
+export class ApiRequestError extends Error {
+  readonly code?: string;
+
+  constructor(message: string, code?: string) {
+    super(message);
+    this.name = 'ApiRequestError';
+    this.code = code;
+  }
+}
+
 // Helper function to make API requests and handle JSON responses
 async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(BASE_URL + path, init);
 
   if (!response.ok) {
-    const errorMessage = await response.text();
-    throw new Error(errorMessage || `Request failed: ${response.status} ${response.statusText}`);
+    const responseBody = await response.text();
+    let message = responseBody || `Request failed: ${response.status} ${response.statusText}`;
+    let code: string | undefined;
+
+    try {
+      const error = JSON.parse(responseBody) as { code?: string; message?: string };
+      message = error.message || message;
+      code = error.code;
+    } catch {
+      // Keep plain-text errors readable for endpoints that do not return ApiErrorDTO.
+    }
+
+    throw new ApiRequestError(message, code);
   }
 
   // Some endpoints return 204 so there is no content to parse as JSON
