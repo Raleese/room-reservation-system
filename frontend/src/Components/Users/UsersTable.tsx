@@ -4,7 +4,6 @@ import type { UsersTableProps } from '../../Types/user_types.ts';
 const ROW_HEIGHT = 52;
 
 function UsersTable({ users }: UsersTableProps) {
-    
     return (
         <TableContainer component={Paper}>
             <Table sx={{ tableLayout: 'fixed' }}>
