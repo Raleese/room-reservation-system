@@ -96,7 +96,7 @@ function Rooms() {
                 }}
                 onRoomCalendarClicked={(roomId) => {
                     setSelectedRoomId(roomId);
-                    setOpen(true);
+                    handleOpen();
                 }}
             />
             <Modal open={open} onClose={handleClose}>
