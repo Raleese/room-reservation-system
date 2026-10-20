@@ -1,4 +1,4 @@
-import type { Reservation, CreateReservation } from '../Types/reservation_types.ts';
+import type { Reservation, CreateReservation, ReservationFilter } from '../Types/reservation_types.ts';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const RESERVATIONS_ENDPOINT = '/reservations';
@@ -21,9 +21,33 @@ async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
 }
 
 // Get all users
-export function getReservations(): Promise<Reservation[]> {
+export function getReservations(filters?: ReservationFilter): Promise<Reservation[]> {
+  const query = new URLSearchParams();
+
+  if (filters?.roomId != null) {
+    query.set('RoomId', filters.roomId.toString());
+  }
+
+  if (filters?.organizerId != null) {
+    query.set('OrganizerId', filters.organizerId.toString());
+  }
+
+  if (filters?.status != null) {
+    query.set('Status', filters.status);
+  }
+
+  // ISO 8601 - date time string format
+  if (filters?.startDate != null) {
+    query.set('StartDate', filters.startDate.toISOString());
+  }
+
+  if (filters?.endDate != null) {
+    query.set('EndDate', filters.endDate.toISOString());
+  }
+
+  const queryString = query.toString();
   return requestJson<Reservation[]>(
-    RESERVATIONS_ENDPOINT
+    `${RESERVATIONS_ENDPOINT}${queryString ? `?${queryString}` : ''}`,
   );
 }
 
