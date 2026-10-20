@@ -2,6 +2,8 @@ import type { Reservation, CreateReservation, ReservationFilter } from '../Types
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const RESERVATIONS_ENDPOINT = '/reservations';
+const CANCEL_RESERVATION_ENDPOINT = '/cancel';
+const COMPLETE_RESERVATION_ENDPOINT = '/complete';
 
 // Helper function to make API requests and handle JSON responses
 async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
@@ -51,12 +53,31 @@ export function getReservations(filters?: ReservationFilter): Promise<Reservatio
   );
 }
 
+// Create a new reservation
 export function createReservation(reservation: CreateReservation): Promise<Reservation> {
   return requestJson<Reservation>(
     RESERVATIONS_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(reservation)      
+    }
+  )
+}
+
+// Cancel a reservation
+export function cancelReservation(reservationId: number): Promise<void> {
+  return requestJson<void>(
+    `${RESERVATIONS_ENDPOINT}/${reservationId}${CANCEL_RESERVATION_ENDPOINT}`, {
+      method: 'PATCH'
+    }
+  )
+}
+
+// Complete a reservation
+export function completeReservation(reservationId: number): Promise<void> {
+  return requestJson<void>(
+    `${RESERVATIONS_ENDPOINT}/${reservationId}${COMPLETE_RESERVATION_ENDPOINT}`, {
+      method: 'PATCH'
     }
   )
 }
