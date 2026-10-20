@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
+namespace RoomReservation.Core.Services;
+
 public class UserService(IAppDbContext db) : IUserService
 {
     public async Task<List<UserDTO>> GetAllAsync()

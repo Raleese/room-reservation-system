@@ -1,3 +1,5 @@
+namespace RoomReservation.Core.DTOs.Rooms;
+
 public record CreateRoomDTO
 (
     string Name,

@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
+namespace RoomReservation.Core.Services;
+
 public class RoomService(IAppDbContext db) : IRoomService
 {
     public async Task<List<RoomDTO>> GetAllAsync(RoomFilterDTO? filter = null)

@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
+namespace RoomReservation.Core.Services;
+
 public class ReservationService(IAppDbContext db, ReservationValidator validator) : IReservationService
 {
     public async Task<List<ReservationDTO>> GetAllAsync(ReservationFilterDTO? filter = null)
@@ -60,7 +62,7 @@ public class ReservationService(IAppDbContext db, ReservationValidator validator
             
     }
 
-    public async Task<(ReservationDTO? Reservation, string? Error)> CreateAsync(CreateReservationDTO dto)
+    public async Task<(ReservationDTO? Reservation, ApiErrorDTO? Error)> CreateAsync(CreateReservationDTO dto)
     {
         var validationError = await validator.ValidateAsync(dto);
         if (validationError is not null)
@@ -73,7 +75,7 @@ public class ReservationService(IAppDbContext db, ReservationValidator validator
 
         if (room is null || organizer is null)
         {
-            return (null, "Room or organizer was not found.");
+            return (null, new ApiErrorDTO("RESOURCE_NOT_FOUND", "Room or organizer was not found."));
         }
 
         var reservation = new Reservation

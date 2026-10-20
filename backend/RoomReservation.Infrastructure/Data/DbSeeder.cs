@@ -1,3 +1,5 @@
+namespace RoomReservation.Infrastructure.Data;
+
 public static class DbSeeder
 {
     public static void Seed(AppDbContext db)

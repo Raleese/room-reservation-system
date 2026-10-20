@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
+namespace RoomReservation.Infrastructure.Data;
+
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options), IAppDbContext
 {
     public DbSet<Room> Rooms => Set<Room>();
