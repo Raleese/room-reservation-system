@@ -61,7 +61,7 @@ function Reservations() {
             </Typography>
             <ReservationForm
                 onReservationCreated={() => {
-                    getReservations()
+                    getReservations(filters)
                         .then((data) => setReservations(data))
                         .catch((error) => {
                             console.error('Error refreshing reservations: ', error);
