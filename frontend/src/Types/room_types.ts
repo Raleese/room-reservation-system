@@ -38,4 +38,9 @@ export type RoomFiltersProps = {
 export type RoomsTableProps = {
     rooms: Room[];
     onRoomDeleted: (roomId: number) => void;
+    onRoomCalendarClicked: (roomId: number) => void;
+};
+
+export type RoomCalendarProps = {
+    roomId: number;
 };
