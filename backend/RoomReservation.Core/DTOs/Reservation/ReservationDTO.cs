@@ -1,5 +1,6 @@
 public record ReservationDTO
 (
+    int Id,
     RoomDTO Room,
     UserDTO Organizer,
     string MeetingTitle,
