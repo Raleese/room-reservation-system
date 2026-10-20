@@ -4,6 +4,7 @@ public class UserService(IAppDbContext db) : IUserService
 {
     public async Task<List<UserDTO>> GetAllAsync()
     {
+        // Mapping to DTOs
         return await db.Users
             .Select(user => new UserDTO(
                 user.Id,

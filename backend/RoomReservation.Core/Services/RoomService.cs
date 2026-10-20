@@ -29,6 +29,7 @@ public class RoomService(IAppDbContext db) : IRoomService
             }
         }
 
+        // Mapping to DTOs
         return rooms.Select(r => new RoomDTO(
             r.Id, 
             r.Name, 
