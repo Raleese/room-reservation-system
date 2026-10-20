@@ -24,6 +24,10 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddScoped<IAppDbContext>(serviceProvider => serviceProvider.GetRequiredService<AppDbContext>());
 
+builder.Services.Configure<BookingOptions>(builder.Configuration.GetSection("Booking"));
+
+builder.Services.AddScoped<ReservationValidator>();
+
 builder.Services.AddControllers().AddJsonOptions(o => 
     o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
