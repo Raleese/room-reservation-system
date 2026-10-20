@@ -178,14 +178,14 @@ function ReservationForm({ onReservationCreated }: ReservationFormProps) {
                     <DateTimePicker
                         label="Start date"
                         value={startDate}
-                        onChange={(newValue) => setStartDate(newValue)}
+                        onChange={(event) => setStartDate(event)}
                         slotProps={{ textField: { size: 'small', fullWidth: true } }}
                     />
                     
                     <DateTimePicker
                         label="End date"
                         value={endDate}
-                        onChange={(newValue) => setEndDate(newValue)}
+                        onChange={(event) => setEndDate(event)}
                         slotProps={{ textField: { size: 'small', fullWidth: true } }}
                     />
                     <TextField
