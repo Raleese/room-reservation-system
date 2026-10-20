@@ -11,7 +11,28 @@ public class ReservationService(IAppDbContext db) : IReservationService
         
         if (filter != null)
         {
-            // Filtering
+            if (filter.RoomId.HasValue)
+            {
+                reservations = reservations.Where(r => r.Room.Id == filter.RoomId.Value).ToList();
+            }
+
+            if (filter.OrganizerId.HasValue)
+            {
+                reservations = reservations.Where(r => r.Organizer.Id == filter.OrganizerId.Value).ToList();
+            }
+
+            if (filter.Status.HasValue)
+            {
+                reservations = reservations.Where(r => r.Status == filter.Status.Value).ToList();
+            }        
+            if (filter.StartDate.HasValue)
+            {
+                reservations = reservations.Where(r => r.StartDate >= filter.StartDate.Value).ToList();
+            }      
+            if (filter.EndDate.HasValue)
+            {
+                reservations = reservations.Where(r => r.EndDate <= filter.EndDate.Value).ToList();
+            }          
         }
 
         // Mapping to DTOs
