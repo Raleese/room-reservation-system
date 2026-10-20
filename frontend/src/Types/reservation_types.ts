@@ -2,6 +2,7 @@ import type { Room } from "./room_types"
 import type {User} from "./user_types"
 
 export type Reservation = {
+    id: number,
     room: Room,
     organizer: User,
     meetingTitle: string,
