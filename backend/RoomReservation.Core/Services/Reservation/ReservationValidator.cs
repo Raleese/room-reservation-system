@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -7,16 +6,16 @@ namespace RoomReservation.Core.Services.Reservations;
 public class ReservationValidator(IAppDbContext db, IOptions<BookingOptions> options)
 {
     private readonly BookingOptions opt = options.Value;
-    public async Task<string?> ValidateAsync(CreateReservationDTO request)
+    public async Task<ApiErrorDTO?> ValidateAsync(CreateReservationDTO request)
     {
         if (string.IsNullOrWhiteSpace(request.MeetingTitle))
         {
-            return "Meeting title is required.";
+            return new("MEETING_TITLE_REQUIRED", "Meeting title is required.");
         }
 
         if (request.NumberOfAttendees <= 0)
         {
-            return "Number of attendees must be greater than zero.";
+            return new("ATTENDEE_COUNT_INVALID", "Number of attendees must be greater than zero.");
         }
 
         var startDate = request.StartDate.ToUniversalTime();
@@ -25,49 +24,49 @@ public class ReservationValidator(IAppDbContext db, IOptions<BookingOptions> opt
 
         if (startDate >= endDate)
         {
-            return "End date must be after start date.";
+            return new("R4_INVALID_TIME_RANGE", "End date must be after start date.");
         }
 
         // R4 - Valid time range (Start must in the future.)
         if (startDate <= now)
         {
-            return "Reservation must start in the future.";
+            return new("R4_START_NOT_FUTURE", "Reservation must start in the future.");
         }
 
         // R1 - Maximum duration (A single reservation cannot last longer than [MaxDurationDays] days. Exactly [MaxDurationDays] days is allowed.)
         if (endDate - startDate > TimeSpan.FromDays(opt.MaxDurationDays))
         {
-            return $"Reservation cannot last longer than {opt.MaxDurationDays} days.";
+            return new("R1_MAX_DURATION_EXCEEDED", $"Reservation cannot last longer than {opt.MaxDurationDays} days.");
         }
 
         // R6 - Booking horizon (A reservation cannot start more than [MaxHorizonDays] days in the future.)
         if (startDate > now.AddDays(opt.MaxHorizonDays))
         {
-            return $"Reservation cannot start more than {opt.MaxHorizonDays} days in the future.";
+            return new("R6_BOOKING_HORIZON_EXCEEDED", $"Reservation cannot start more than {opt.MaxHorizonDays} days in the future.");
         }
 
         var room = await db.Rooms.FindAsync(request.RoomId);
         if (room is null)
         {
-            return "Room was not found.";
+            return new("ROOM_NOT_FOUND", "Room was not found.");
         }
 
         // R7 - Active rooms only (Inactive rooms cannot be booked.)
         if (!room.IsActive)
         {
-            return "Inactive rooms cannot be booked.";
+            return new("R7_ROOM_INACTIVE", "Inactive rooms cannot be booked.");
         }
 
         // R5 - Capacity (Number of attendees must not exceed the room capacity.)
         if (request.NumberOfAttendees > room.Capacity)
         {
-            return "Number of attendees cannot exceed room capacity.";
+            return new("R5_ROOM_CAPACITY_EXCEEDED", "Number of attendees cannot exceed room capacity.");
         }
 
         var organizerExists = await db.Users.AnyAsync(user => user.Id == request.OrganizerId);
         if (!organizerExists)
         {
-            return "Organizer was not found.";
+            return new("ORGANIZER_NOT_FOUND", "Organizer was not found.");
         }
 
         // R2 - No overlapping room bookings (A room cannot have two active reservations. Cancelled and completed reservations do not block a new booking.)
@@ -79,7 +78,7 @@ public class ReservationValidator(IAppDbContext db, IOptions<BookingOptions> opt
 
         if (roomIsBooked)
         {
-            return "The room is already booked during this time.";
+            return new("R2_ROOM_BOOKING_OVERLAP", "The room is already booked during this time.");
         }
 
         // R3 - No overlapping organizer bookings (The same user cannot organize two active meetings that overlap, even in different rooms.)
@@ -91,7 +90,7 @@ public class ReservationValidator(IAppDbContext db, IOptions<BookingOptions> opt
 
         if (organizerIsBooked)
         {
-            return "The organizer already has a meeting during this time.";
+            return new("R3_ORGANIZER_BOOKING_OVERLAP", "The organizer already has a meeting during this time.");
         }
 
         return null;
