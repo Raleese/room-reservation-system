@@ -5,6 +5,7 @@
 *.suo
 *.userosscache
 *.sln.docstates
+**/validation-output
 
 # Visual Studio Code
 .vscode/*
