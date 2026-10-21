@@ -1,4 +1,4 @@
-import { Container, Pagination, Typography } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { getReservations, cancelReservation, completeReservation } from '../Api/ReservationApi.ts';
 import FormAlert from '../Components/Shared/FormAlert.tsx';
@@ -15,13 +15,10 @@ const EMPTY_RESERVATION_FILTER: ReservationFilter = {
     endDate: null
 };
 
-const USERS_PER_PAGE = 5;
-
 function Reservations() {
     const [reservations, setReservations] = useState<Reservation[]>([]);
     const [filters, setFilters] = useState<ReservationFilter>(EMPTY_RESERVATION_FILTER);
     const [loadError, setLoadError] = useState('');
-    const [page, setPage] = useState(1);
 
     useEffect(() => {
         getReservations(filters)
@@ -34,17 +31,6 @@ function Reservations() {
                 setLoadError(error instanceof Error ? error.message : 'Unable to load reservations.');
             });
     }, [filters]);
-
-    useEffect(() => {
-        const lastPage = Math.max(1, Math.ceil(reservations.length / USERS_PER_PAGE));
-        setPage((currentPage) => Math.min(currentPage, lastPage));
-    }, [reservations.length]);
-
-    const pageCount = Math.ceil(reservations.length / USERS_PER_PAGE);
-    const visibleReservations = reservations.slice(
-        (page - 1) * USERS_PER_PAGE,
-        page * USERS_PER_PAGE,
-    );
 
     return (
         <Container
@@ -73,11 +59,10 @@ function Reservations() {
             <ReservationFilters
                 onFiltersChange={(nextFilters) => {
                     setFilters(nextFilters);
-                    setPage(1);
                 }}
             />
             <ReservationsTable
-                reservations={visibleReservations}
+                reservations={reservations}
                 onReservationCancelled={(reservationId) => {
                     cancelReservation(reservationId)
                         .then(() => {
@@ -109,22 +94,14 @@ function Reservations() {
                         });
                 }}
             />
-            {pageCount > 1 ? (
-                <Container
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        mt: 1,
-                    }}
-                >
-                    <Pagination
-                        count={pageCount}
-                        page={page}
-                        onChange={(_, nextPage) => setPage(nextPage)}
-                        sx={{ color: 'gray' }}
-                    />
-                </Container>
-            ) : <></>}
+            <Container
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    mt: 1,
+                }}
+            >
+            </Container>
         </Container>
     );
 }

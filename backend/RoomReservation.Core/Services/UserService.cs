@@ -6,14 +6,11 @@ public class UserService(IAppDbContext db) : IUserService
 {
     public async Task<List<UserDTO>> GetAllAsync()
     {
+        var users = await db.Users
+        .Include(u => u.Reservations)
+        .ToListAsync();
+
         // Mapping to DTOs
-        return await db.Users
-            .Select(user => new UserDTO(
-                user.Id,
-                user.FirstName,
-                user.LastName,
-                user.Reservations.Count(r =>
-                    r.Status == ReservationStatus.Booked)))
-            .ToListAsync();
+        return users.Select(u => Mapper.UserToDTO(u)).ToList();
     }
 }
