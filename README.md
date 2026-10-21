@@ -6,7 +6,7 @@ A web application for managing meeting rooms and reservations in an office. It i
 
 <img width="1914" height="1056" alt="image" src="https://github.com/user-attachments/assets/d11362e7-bb68-4789-81be-422ec5f8e065" />
 <img width="1914" height="1047" alt="image" src="https://github.com/user-attachments/assets/13def14d-c8d7-4ef9-8858-5df80eb12f8a" />
-<img width="1918" height="1055" alt="image" src="https://github.com/user-attachments/assets/6fd56e65-aabc-4dbf-99de-189a58052386" />
+<img width="1916" height="1064" alt="image" src="https://github.com/user-attachments/assets/e7c48a16-3062-4291-b295-147559f917b2" />
 
 ## Features
 
