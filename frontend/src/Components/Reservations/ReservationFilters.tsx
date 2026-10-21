@@ -104,6 +104,8 @@ function ReservationFilters({ onFiltersChange }: ReservationFiltersProps) {
                 </TextField>
                 <DateTimePicker
                     label="Start date"
+                    format="YYYY-MM-DD HH:mm"
+                    ampm={false}
                     value={startDate}
                     onChange={(event) => {
                         setStartDate(event);
@@ -114,6 +116,8 @@ function ReservationFilters({ onFiltersChange }: ReservationFiltersProps) {
                 
                 <DateTimePicker
                     label="End date"
+                    format="YYYY-MM-DD HH:mm"
+                    ampm={false}
                     value={endDate}
                     onChange={(event) => {
                         setEndDate(event);
