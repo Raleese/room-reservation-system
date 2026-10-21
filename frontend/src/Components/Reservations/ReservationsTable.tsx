@@ -1,26 +1,11 @@
 import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material';
-import { useEffect, useState } from 'react';
 import type { ReservationsTableProps } from '../../Types/reservation_types.ts';
 
 const ROW_HEIGHT = 52;
-const DATE_FORMATTER = new Intl.DateTimeFormat('lt-LT', {
-    dateStyle: 'short',
-    timeStyle: 'short',
-});
 const BOOKED_STATUS = 'Booked';
 
-function formatDate(value: string) {
-    const date = new Date(value);
-    return Number.isNaN(date.getTime()) ? 'Invalid date' : DATE_FORMATTER.format(date);
-}
-
 function ReservationsTable({ reservations, onReservationCancelled, onReservationCompleted }: ReservationsTableProps) {
-    const [currentTime, setCurrentTime] = useState(() => Date.now());
-
-    useEffect(() => {
-        const timer = window.setInterval(() => setCurrentTime(Date.now()));
-        return () => window.clearInterval(timer);
-    }, []);
+    const now = Date.now();
 
     return (
         <TableContainer component={Paper}>
@@ -101,8 +86,8 @@ function ReservationsTable({ reservations, onReservationCancelled, onReservation
                                     </span>
                                 </Tooltip>
                             </TableCell>
-                            <TableCell>{formatDate(reservation.startDate)}</TableCell>
-                            <TableCell>{formatDate(reservation.endDate)}</TableCell>
+                            <TableCell>{new Date(reservation.startDate).toLocaleString('lt-LT', { dateStyle: 'short', timeStyle: 'short' })}</TableCell>
+                            <TableCell>{new Date(reservation.endDate).toLocaleString('lt-LT', { dateStyle: 'short', timeStyle: 'short' })}</TableCell>
                             <TableCell>{reservation.numberOfAttendees}</TableCell>
                             <TableCell>{reservation.status}</TableCell>
                             <TableCell>
@@ -120,7 +105,7 @@ function ReservationsTable({ reservations, onReservationCancelled, onReservation
                                 >
                                     Cancel
                                 </Button>
-                                {new Date(reservation.startDate).getTime() <= currentTime && <Button
+                                {new Date(reservation.startDate).getTime() <= now && <Button
                                     variant="contained"
                                     onClick={() => onReservationCompleted(reservation.id)}
                                     sx={{
