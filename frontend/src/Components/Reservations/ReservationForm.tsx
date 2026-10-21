@@ -107,7 +107,7 @@ function ReservationForm({ onReservationCreated }: ReservationFormProps) {
     useEffect(() => {
         getUsers()
         .then((data) => setUsers(data))
-        .catch((err) => setFormError('Failed to load rooms: ' + err));
+        .catch((err) => setFormError('Failed to load users: ' + err));
     }, []);
 
     return (
