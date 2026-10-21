@@ -1,7 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
+using QuestPDF.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// QuestPDF license
+QuestPDF.Settings.License = LicenseType.Community;
 
 // Services
 builder.Services.AddOpenApi();
@@ -24,6 +28,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddScoped<IAppDbContext>(serviceProvider => serviceProvider.GetRequiredService<AppDbContext>());
 builder.Services.AddScoped<ReservationValidator>();
+builder.Services.AddScoped<IExportService, ExportService>();
 
 builder.Services.Configure<BookingOptions>(builder.Configuration.GetSection("Booking"));
 
