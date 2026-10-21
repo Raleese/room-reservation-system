@@ -9,12 +9,12 @@ public class ExportsController(IExportService export) : ControllerBase
     [HttpGet("rooms/{roomId}/pdf")]
     public async Task<ActionResult> ExportRoomUsageToPdf([FromRoute] int roomId)
     {
-        (byte[]? pdfContent, string fileName) = await export.ExportRoomUsageToPdfAsync(roomId);
+        byte[]? pdfContent = await export.ExportRoomUsageToPdfAsync(roomId);
         if (pdfContent == null)
         {
             return NotFound();
         }
 
-        return File(pdfContent, "application/pdf", fileName);
+        return File(pdfContent, "application/pdf");
     }
 }

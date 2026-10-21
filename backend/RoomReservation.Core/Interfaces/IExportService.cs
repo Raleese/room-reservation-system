@@ -4,5 +4,5 @@ namespace RoomReservation.Core.Interfaces;
 
 public interface IExportService
 {
-    Task<(byte[]?, string)> ExportRoomUsageToPdfAsync(int roomId);
+    Task<byte[]?> ExportRoomUsageToPdfAsync(int roomId);
 }

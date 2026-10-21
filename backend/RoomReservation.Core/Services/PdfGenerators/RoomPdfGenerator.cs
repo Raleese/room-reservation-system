@@ -1,3 +1,4 @@
+using System.Globalization;
 using QuestPDF.Helpers;
 using QuestPDF.Fluent;
 
@@ -53,8 +54,8 @@ public static class RoomPdfGenerator
                             table.Cell().Text(reservation.Id.ToString());
                             table.Cell().Text(reservation.MeetingTitle);
                             table.Cell().Text(reservation.Organizer.FirstName + " " + reservation.Organizer.LastName);
-                            table.Cell().Text(reservation.StartDate.ToString("g"));
-                            table.Cell().Text(reservation.EndDate.ToString("g"));
+                            table.Cell().Text(reservation.StartDate.ToString("yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture));
+                            table.Cell().Text(reservation.EndDate.ToString("yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture));
                             table.Cell().Text(reservation.Status.ToString());
                         }
                     });

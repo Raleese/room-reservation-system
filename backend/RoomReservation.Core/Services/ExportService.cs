@@ -4,7 +4,7 @@ namespace RoomReservation.Core.Services;
 
 public class ExportService(IAppDbContext db) : IExportService
 {
-    public async Task<(byte[]?, string)> ExportRoomUsageToPdfAsync(int roomId)
+    public async Task<byte[]?> ExportRoomUsageToPdfAsync(int roomId)
     {
         // Fetch room usage data from the database
         List<Reservation> roomUsage = await db.Reservations
@@ -15,7 +15,7 @@ public class ExportService(IAppDbContext db) : IExportService
 
         if (roomUsage == null || roomUsage.Count == 0)
         {
-            return (null, string.Empty);
+            return null; // No data to export
         }
 
         // Generate PDF content
@@ -23,6 +23,6 @@ public class ExportService(IAppDbContext db) : IExportService
         string fileName = $"RoomUsage_{roomId}.pdf";
 
 
-        return (pdfContent, fileName);
+        return pdfContent;
     }
 }
