@@ -6,8 +6,8 @@ export type Reservation = {
     room: Room,
     organizer: User,
     meetingTitle: string,
-    startDate: Date,
-    endDate: Date,
+    startDate: string,
+    endDate: string,
     numberOfAttendees: number,
     status: ReservationStatus
 } 
