@@ -4,7 +4,6 @@ import timeGridPlugin from '@fullcalendar/react/timegrid';
 import classicThemePlugin from '@fullcalendar/react/themes/classic';
 import '@fullcalendar/react/skeleton.css';
 import '@fullcalendar/react/themes/classic/theme.css';
-import './RoomCalendar.css';
 import { getReservations } from '../../Api/ReservationApi.ts';
 import type { RoomCalendarProps } from '../../Types/room_types.ts';
 
@@ -14,6 +13,12 @@ function RoomCalendar({ roomId }: RoomCalendarProps) {
             className="room-calendar"
             plugins={[timeGridPlugin, dayGridPlugin, classicThemePlugin]}
             initialView="timeGridWeek"
+            locale="en-CA"
+            firstDay={1}
+            titleFormat={{ year: 'numeric', month: '2-digit', day: '2-digit' }}
+            dayHeaderFormat={{ year: 'numeric', month: '2-digit', day: '2-digit' }}
+            slotHeaderFormat={{ hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }}
+            eventTimeFormat={{ hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }}
             headerToolbar={{
                 left: 'prev,next today',
                 center: 'title',
