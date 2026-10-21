@@ -6,6 +6,7 @@ import RoomFilters from '../Components/Rooms/RoomFilters.tsx';
 import RoomsTable from '../Components/Rooms/RoomsTable.tsx';
 import RoomCalendar from '../Components/Rooms/RoomCalendar.tsx';
 import type { Room, RoomFilter } from '../Types/room_types.ts';
+import { exportRoomInfoToPdf } from '../Api/ExportApi.ts';
 
 const EMPTY_ROOM_FILTER: RoomFilter = {
     minimumCapacity: null,
@@ -59,6 +60,23 @@ function Rooms() {
                 onRoomCalendarClicked={(roomId) => {
                     setSelectedRoomId(roomId);
                     handleOpen();
+                }}
+                onRoomExportClicked={(roomId) => {
+                    exportRoomInfoToPdf(roomId)
+                        .then(({blob, fileName}) => {
+                            const url = window.URL.createObjectURL(blob);
+                            const link = document.createElement('a');
+                            link.href = url;
+                            link.download = fileName || `RoomUsage_${roomId}.pdf`;
+                            link.click();
+
+                            // Clean up the URL
+                            window.URL.revokeObjectURL(url);
+                        })
+                        .catch((error) => {
+                            console.error('Error exporting room info: ', error);
+                            setLoadError(error instanceof Error ? error.message : 'Unable to export room info.');
+                        });
                 }}
             />
             <Modal open={open} onClose={handleClose}>
