@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-
 namespace RoomReservation.Core.Interfaces;
 
 public interface IExportService
