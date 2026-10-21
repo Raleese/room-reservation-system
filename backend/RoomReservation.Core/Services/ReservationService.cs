@@ -20,9 +20,9 @@ public class ReservationService(IAppDbContext db, ReservationValidator validator
             if (filter.Status.HasValue)
                 reservations = reservations.Where(r => r.Status == filter.Status.Value).ToList();  
             if (filter.StartDate.HasValue)
-                reservations = reservations.Where(r => r.StartDate >= filter.StartDate.Value).ToList();  
+                reservations = reservations.Where(r => r.EndDate > filter.StartDate.Value).ToList();  
             if (filter.EndDate.HasValue)
-                reservations = reservations.Where(r => r.EndDate <= filter.EndDate.Value).ToList();     
+                reservations = reservations.Where(r => r.StartDate < filter.EndDate.Value).ToList();       
         }
 
         // Mapping to DTO
