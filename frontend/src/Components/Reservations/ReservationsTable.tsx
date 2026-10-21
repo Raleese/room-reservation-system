@@ -1,8 +1,8 @@
 import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material';
-import type { ReservationsTableProps } from '../../Types/reservation_types.ts';
+import type { ReservationsTableProps, ReservationStatus } from '../../Types/reservation_types.ts';
 
 const ROW_HEIGHT = 52;
-const BOOKED_STATUS = 'Booked';
+const BOOKED_STATUS: ReservationStatus = 'Booked';
 
 function ReservationsTable({ reservations, onReservationCancelled, onReservationCompleted }: ReservationsTableProps) {
     const now = Date.now();
