@@ -18,6 +18,7 @@ A web application for managing meeting rooms and reservations in an office. It i
 - View the calendar of a single room.
 - Export a room's schedule info as a PDF file.
 - Seed sample rooms, users, and reservations when the backend starts.
+- Unit tests for reservation, room, rser services and the reservation validator.
 
 Reservation validation runs in the backend. The default rules are:
 
@@ -79,6 +80,13 @@ Then:
 cd frontend
 npm install
 npm run dev
+```
+
+## Run unit tests
+
+```bash
+cd backend
+dotnet test
 ```
 
 ## Project structure
