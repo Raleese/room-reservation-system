@@ -89,6 +89,7 @@ public class ReservationService(IAppDbContext db, ReservationValidator validator
 
     public async Task<bool> CompleteAsync(int reservationId)
     {
+        // A reservation can only be ended early if its currently booked and the start date has passed
         var reservation = await db.Reservations.FindAsync(reservationId);
         if (reservation is null ||
             reservation.Status != ReservationStatus.Booked ||
