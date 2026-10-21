@@ -6,4 +6,4 @@ global using RoomReservation.Core.DTOs.Users;
 global using RoomReservation.Core.DTOs.Errors;
 global using RoomReservation.Core.Interfaces;
 global using RoomReservation.Core.Services.Reservations;
-
+global using RoomReservation.Core.Mappers;
