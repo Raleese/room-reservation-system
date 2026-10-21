@@ -1,5 +1,6 @@
 namespace RoomReservation.Domain.Entities.Enums;
 
+// Flags attribute allows combining multiple equipment types using bitwise operations
 [Flags]
 public enum Equipment
 {
