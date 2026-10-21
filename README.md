@@ -1,6 +1,6 @@
 # Room Reservation System
 
-A web application for managing meeting rooms and reservations in an office. It is built with React and TypeScript on the frontend and ASP.NET Core with Entity Framework Core on the backend.
+A web application for managing meeting rooms and reservations in an office. It is built with React and TypeScript on the frontend and ASP.NET Core with Entity Framework Core on the backend. Unit tests were done with xUnit.
 
 ## Screenshots
 
