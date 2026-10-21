@@ -26,7 +26,7 @@ function RoomCalendar({ roomId }: RoomCalendarProps) {
             }}
             height="auto"
             allDaySlot={false}
-            events={(info, success, failure) => {
+            events={(info, success) => {
                 getReservations({
                     roomId,
                     organizerId: null,
@@ -47,7 +47,6 @@ function RoomCalendar({ roomId }: RoomCalendarProps) {
                                 })),
                         ),
                     )
-                    .catch((e) => failure(e));
             }}
         />
     );
