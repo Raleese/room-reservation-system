@@ -10,7 +10,7 @@ const EQUIPMENT_OPTIONS: { value: Equipment; label: string }[] = [
     { value: 'Whiteboard', label: 'Whiteboard' },
 ];
 
-function RoomsTable({ rooms, onRoomCalendarClicked }: RoomsTableProps) {
+function RoomsTable({ rooms, onRoomCalendarClicked, onRoomExportClicked }: RoomsTableProps) {
     return (
         <TableContainer component={Paper}>
             <Table sx={{ tableLayout: 'fixed' }}>
@@ -78,6 +78,19 @@ function RoomsTable({ rooms, onRoomCalendarClicked }: RoomsTableProps) {
                                     }}
                                 >
                                     Calendar
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    onClick={() => onRoomExportClicked(room.id)}
+                                    sx={{
+                                        minWidth: 80,
+                                        height: 30,
+                                        backgroundColor: '#8f4f3e',
+                                        '&:hover': { backgroundColor: '#b8644e' },
+                                        color: '#fff4ec',
+                                    }}
+                                >
+                                    Export
                                 </Button>
                             </TableCell>
                         </TableRow>
