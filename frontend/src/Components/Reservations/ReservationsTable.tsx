@@ -1,4 +1,5 @@
 import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material';
+import { useEffect, useState } from 'react';
 import type { ReservationsTableProps } from '../../Types/reservation_types.ts';
 
 const ROW_HEIGHT = 52;
@@ -8,12 +9,19 @@ const DATE_FORMATTER = new Intl.DateTimeFormat('lt-LT', {
 });
 const BOOKED_STATUS = 'Booked';
 
-function formatDate(value: Date) {
+function formatDate(value: string) {
     const date = new Date(value);
     return Number.isNaN(date.getTime()) ? 'Invalid date' : DATE_FORMATTER.format(date);
 }
 
 function ReservationsTable({ reservations, onReservationCancelled, onReservationCompleted }: ReservationsTableProps) {
+    const [currentTime, setCurrentTime] = useState(() => Date.now());
+
+    useEffect(() => {
+        const timer = window.setInterval(() => setCurrentTime(Date.now()));
+        return () => window.clearInterval(timer);
+    }, []);
+
     return (
         <TableContainer component={Paper}>
             <Table sx={{ tableLayout: 'fixed' }}>
@@ -112,7 +120,7 @@ function ReservationsTable({ reservations, onReservationCancelled, onReservation
                                 >
                                     Cancel
                                 </Button>
-                                <Button
+                                {new Date(reservation.startDate).getTime() <= currentTime && <Button
                                     variant="contained"
                                     onClick={() => onReservationCompleted(reservation.id)}
                                     sx={{
@@ -124,7 +132,7 @@ function ReservationsTable({ reservations, onReservationCancelled, onReservation
                                     }}
                                 >
                                     End
-                                </Button>
+                                </Button>}
                                 </>}
                             </TableCell>
                         </TableRow>
