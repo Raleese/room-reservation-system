@@ -90,7 +90,9 @@ public class ReservationService(IAppDbContext db, ReservationValidator validator
     public async Task<bool> CompleteAsync(int reservationId)
     {
         var reservation = await db.Reservations.FindAsync(reservationId);
-        if (reservation is null || reservation.Status != ReservationStatus.Booked)
+        if (reservation is null ||
+            reservation.Status != ReservationStatus.Booked ||
+            reservation.StartDate.ToUniversalTime() > DateTime.UtcNow)
         {
             return false;
         }
