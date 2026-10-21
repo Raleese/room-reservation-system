@@ -27,16 +27,19 @@ import { Box, Paper, Typography } from '@mui/material';
 					Room Reservation System
 				</Typography>
 				<Typography variant="body1">
-					Text
+					Browse rooms and filter them by minimum capacity, equipment, and floor
 				</Typography>
 				<Typography variant="body1">
-					Text
+					View users and the number of their active reservations
 				</Typography>
 				<Typography variant="body1">
-					Text
+					Create and filter reservations by room, organizer, status, and date range
 				</Typography>
 				<Typography variant="body1">
-					Text
+					Cancel a booked reservation or end a meeting after it has started. Ending a meeting marks it completed and records the current end time
+				</Typography>
+				<Typography variant="body1">
+					Export a room's schedule info as a PDF file and view the room's calendar
 				</Typography>
 			</Paper>
 		</Box>
