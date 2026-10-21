@@ -1,4 +1,4 @@
-import type { CreateRoom, Room, RoomFilter } from '../Types/room_types.ts';
+import type { Room, RoomFilter } from '../Types/room_types.ts';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const ROOMS_ENDPOINT = '/rooms';
