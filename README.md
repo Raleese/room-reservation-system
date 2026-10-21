@@ -13,25 +13,27 @@ A web application for managing meeting rooms and reservations in an office. It i
 - Browse rooms and filter them by minimum capacity, equipment, and floor.
 - View users and the number of their active reservations.
 - Create and filter reservations by room, organizer, status, and date range.
-- Cancel a booked reservation or end a meeting early. Ending a meeting marks it completed and records the current end time.
+- Cancel a booked reservation or end a meeting after it has started. Ending a meeting marks it completed and records the current end time.
 - Configure maximum reservation duration and booking horizon in `backend/RoomReservation.API/appsettings.json`.
+- View the calendar of a single room.
+- Export a room's schedule info as a PDF file.
 - Seed sample rooms, users, and reservations when the backend starts.
 
-Reservation validation runs in the backend:
+Reservation validation runs in the backend. The default rules are:
 
 - R1: A single reservation cannot last longer than 7 days. Exactly 7 days is allowed.
-- R2: A room cannot have two active reservations. Cancelled reservation does not block the room.
+- R2: A room cannot have two active reservations. Cancelled and completed reservations do not block the room.
 - R3: The same user cannot organize two meetings that overlap in date, even in different rooms.
 - R4: Start must in the future.
 - R5: Number of attendees must not exceed the room capacity.
 - R6: A reservation cannot start more than 90 days in the future.
 - R7: Inactive rooms cannot be booked.
 
-The duration and booking horizon values are, as mentioned earlier, configurable in `backend/RoomReservation.API/appsettings.json` using `Booking:MaxDurationDays` and `Booking:MaxHorizonDays`.
+The duration and booking horizon values are configurable in `backend/RoomReservation.API/appsettings.json` using `Booking:MaxDurationDays` and `Booking:MaxHorizonDays`.
 
 ### Reservation error codes
 
-When a reservation cannot be created due to breaking a rule OR not passing any of the basic validation, the API returns an error code
+When reservation creation fails validation, the API returns an error code and message:
 
 | Code | Rule |
 | --- | --- |
@@ -58,11 +60,11 @@ When a reservation cannot be created due to breaking a rule OR not passing any o
 
 Open two terminals from the repository root.
 
-Start the backend using its HTTP launch profile:
+Start the backend:
 
 ```bash
 cd backend
-dotnet run --project RoomReservation.API/RoomReservation.API.csproj --launch-profile http
+dotnet run --project RoomReservation.API/RoomReservation.API.csproj
 ```
 
 The API listens at `http://localhost:5055`.
@@ -98,15 +100,14 @@ frontend/
 | Method | Route | Purpose |
 | --- | --- | --- |
 | `GET` | `/api/rooms` | List rooms; supports capacity, equipment, and floor filters |
-| `POST` | `/api/rooms` | Create a room |
-| `DELETE` | `/api/rooms/{id}` | Delete a room |
 | `GET` | `/api/users` | List users and their active reservation counts |
 | `GET` | `/api/reservations` | List reservations; supports room, organizer, status, and date filters |
 | `POST` | `/api/reservations` | Create a reservation |
 | `PATCH` | `/api/reservations/{id}/cancel` | Cancel a booked reservation |
-| `PATCH` | `/api/reservations/{id}/complete` | Complete a booked reservation |
+| `PATCH` | `/api/reservations/{id}/complete` | Complete a booked reservation after it has started |
+| `GET` | `/api/exports/rooms/{roomId}/pdf` | Download a room's reservation usage report as a PDF |
 
 ## Implementation notes
 
 - The backend uses an EF Core in-memory database. Seed data is recreated when the backend process starts.
-- DTO mapping is currently done directly in the backend services.
+- DTO mapping is handled by the backend mapper.
