@@ -92,6 +92,7 @@ function ReservationForm({ onReservationCreated }: ReservationFormProps) {
             setFormError('');
         } catch (error) {
             // Check whether error is an instance of Error and set the form error message
+            console.error('Error creating reservation: ', error);
             setFormError(error instanceof Error ? error.message : 'Unable to add a reservation.');
         }
     };
