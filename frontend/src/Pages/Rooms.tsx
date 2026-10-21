@@ -63,11 +63,11 @@ function Rooms() {
                 }}
                 onRoomExportClicked={(roomId) => {
                     exportRoomInfoToPdf(roomId)
-                        .then(({blob, fileName}) => {
+                        .then((blob) => {
                             const url = window.URL.createObjectURL(blob);
                             const link = document.createElement('a');
                             link.href = url;
-                            link.download = fileName || `RoomUsage_${roomId}.pdf`;
+                            link.download = `RoomUsage_${roomId}.pdf`;
                             link.click();
 
                             // Clean up the URL
