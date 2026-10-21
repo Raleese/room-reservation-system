@@ -34,6 +34,7 @@ export type RoomFiltersProps = {
 export type RoomsTableProps = {
     rooms: Room[];
     onRoomCalendarClicked: (roomId: number) => void;
+    onRoomExportClicked: (roomId: number) => void;
 };
 
 export type RoomCalendarProps = {
