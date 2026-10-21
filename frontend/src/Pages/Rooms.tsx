@@ -1,8 +1,7 @@
 import { Container, Modal, Pagination, Typography, Box } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { deleteRoom, getRooms } from '../Api/RoomApi.ts';
+import { getRooms } from '../Api/RoomApi.ts';
 import FormAlert from '../Components/Shared/FormAlert.tsx';
-import RoomForm from '../Components/Rooms/RoomForm.tsx';
 import RoomFilters from '../Components/Rooms/RoomFilters.tsx';
 import RoomsTable from '../Components/Rooms/RoomsTable.tsx';
 import RoomCalendar from '../Components/Rooms/RoomCalendar.tsx';
@@ -63,16 +62,6 @@ function Rooms() {
             <Typography variant="h4" gutterBottom>
                 Meeting rooms
             </Typography>
-            <RoomForm
-                onRoomCreated={() => {
-                    getRooms(filters)
-                        .then((data) => setRooms(data))
-                        .catch((error) => {
-                            console.error('Error refreshing rooms: ', error);
-                            setLoadError(error instanceof Error ? error.message : 'Unable to refresh rooms.');
-                        });
-                }}
-            />
             <FormAlert message={loadError} />
             <RoomFilters
                 onFiltersChange={(nextFilters) => {
@@ -82,18 +71,6 @@ function Rooms() {
             />
             <RoomsTable
                 rooms={visibleRooms}
-                onRoomDeleted={(roomId) => {
-                    deleteRoom(roomId)
-                        .then(() => {
-                            setRooms((currentRooms) =>
-                                currentRooms.filter((room) => room.id !== roomId),
-                            );
-                        })
-                        .catch((error) => {
-                            console.error('Error deleting room: ', error);
-                            setLoadError(error instanceof Error ? error.message : 'Unable to delete room.');
-                        });
-                }}
                 onRoomCalendarClicked={(roomId) => {
                     setSelectedRoomId(roomId);
                     handleOpen();

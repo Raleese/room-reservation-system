@@ -27,17 +27,12 @@ export type Equipment =
     | "VideoConferencing"
     | "Whiteboard"
 
-export type RoomFormProps = {
-    onRoomCreated: (room: Room) => void;
-};
-
 export type RoomFiltersProps = {
     onFiltersChange: (filters: RoomFilter) => void;
 };
 
 export type RoomsTableProps = {
     rooms: Room[];
-    onRoomDeleted: (roomId: number) => void;
     onRoomCalendarClicked: (roomId: number) => void;
 };
 

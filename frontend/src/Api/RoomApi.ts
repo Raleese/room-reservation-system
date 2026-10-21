@@ -43,19 +43,3 @@ export function getRooms(filters?: RoomFilter): Promise<Room[]> {
     `${ROOMS_ENDPOINT}${queryString ? `?${queryString}` : ''}`,
   );
 }
-
-// Create a new room
-export function createRoom(createRoomDTO: CreateRoom): Promise<Room> {
-  return requestJson<Room>(ROOMS_ENDPOINT, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(createRoomDTO)
-  });
-}
-
-// Delete a room by ID
-export function deleteRoom(roomId: number): Promise<void> {
-  return requestJson<void>(`${ROOMS_ENDPOINT}/${roomId}`, {
-    method: 'DELETE',
-  });
-}
