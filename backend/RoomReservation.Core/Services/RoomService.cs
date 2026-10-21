@@ -11,9 +11,7 @@ public class RoomService(IAppDbContext db) : IRoomService
         if (filter != null)
         {
             if (filter.MinimumCapacity.HasValue)
-            {
                 rooms = rooms.Where(r => r.Capacity >= filter.MinimumCapacity.Value).ToList();
-            }
 
             if (filter.Equipment != null && filter.Equipment.Length > 0)
             {
@@ -22,24 +20,15 @@ public class RoomService(IAppDbContext db) : IRoomService
                 {
                     equipmentFlags |= equipment;
                 }
+                // Filter rooms that have all the specified equipment using bitwise AND to check if all flags are present
                 rooms = rooms.Where(r => (r.Equipment & equipmentFlags) == equipmentFlags).ToList();
             }
 
             if (filter.Floor.HasValue)
-            {
                 rooms = rooms.Where(r => r.Floor == filter.Floor.Value).ToList();
-            }
         }
 
-        // Mapping to DTOs
-        return rooms.Select(r => new RoomDTO(
-            r.Id, 
-            r.Name, 
-            r.Capacity, 
-            r.Floor,
-            Enum.GetValues<Equipment>()
-                .Where(e => e != Equipment.None && r.Equipment.HasFlag(e))
-                .ToArray(), 
-            r.IsActive)).ToList();
+        // Mapping to DTO
+        return rooms.Select(r => Mapper.RoomToDTO(r)).ToList();
     }
 }

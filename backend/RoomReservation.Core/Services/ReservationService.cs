@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using Microsoft.EntityFrameworkCore;
 
 namespace RoomReservation.Core.Services;
@@ -14,51 +15,19 @@ public class ReservationService(IAppDbContext db, ReservationValidator validator
         if (filter != null)
         {
             if (filter.RoomId.HasValue)
-            {
                 reservations = reservations.Where(r => r.Room.Id == filter.RoomId.Value).ToList();
-            }
-
             if (filter.OrganizerId.HasValue)
-            {
                 reservations = reservations.Where(r => r.Organizer.Id == filter.OrganizerId.Value).ToList();
-            }
-
             if (filter.Status.HasValue)
-            {
-                reservations = reservations.Where(r => r.Status == filter.Status.Value).ToList();
-            }        
+                reservations = reservations.Where(r => r.Status == filter.Status.Value).ToList();  
             if (filter.StartDate.HasValue)
-            {
-                reservations = reservations.Where(r => r.StartDate >= filter.StartDate.Value).ToList();
-            }      
+                reservations = reservations.Where(r => r.StartDate >= filter.StartDate.Value).ToList();  
             if (filter.EndDate.HasValue)
-            {
-                reservations = reservations.Where(r => r.EndDate <= filter.EndDate.Value).ToList();
-            }          
+                reservations = reservations.Where(r => r.EndDate <= filter.EndDate.Value).ToList();     
         }
 
-        // Mapping to DTOs
-        return reservations.Select(r => new ReservationDTO(
-            r.Id,
-            new RoomDTO(
-                r.Room.Id,
-                r.Room.Name,
-                r.Room.Capacity,
-                r.Room.Floor,
-                Enum.GetValues<Equipment>()
-                    .Where(equipment => equipment != Equipment.None && r.Room.Equipment.HasFlag(equipment))
-                    .ToArray(),
-                r.Room.IsActive),
-            new UserDTO(
-                r.Organizer.Id,
-                r.Organizer.FirstName,
-                r.Organizer.LastName,
-                r.Organizer.Reservations.Count(reservation => reservation.Status == ReservationStatus.Booked)),
-            r.MeetingTitle,
-            r.StartDate,
-            r.EndDate,
-            r.NumberOfAttendees,
-            r.Status)).ToList();
+        // Mapping to DTO
+        return reservations.Select(r => Mapper.ReservationToDTO(r)).ToList();
             
     }
 
@@ -94,31 +63,13 @@ public class ReservationService(IAppDbContext db, ReservationValidator validator
         db.Reservations.Add(reservation);
         await db.SaveChangesAsync();
 
+        // Count the number of active reservations for the organizer
         var organizerActiveReservations = await db.Reservations.CountAsync(existing =>
             existing.UserId == organizer.Id &&
             existing.Status == ReservationStatus.Booked);
 
-        var reservationDto = new ReservationDTO(
-            reservation.Id,
-            new RoomDTO(
-                room.Id,
-                room.Name,
-                room.Capacity,
-                room.Floor,
-                Enum.GetValues<Equipment>()
-                    .Where(equipment => equipment != Equipment.None && room.Equipment.HasFlag(equipment))
-                    .ToArray(),
-                room.IsActive),
-            new UserDTO(
-                organizer.Id,
-                organizer.FirstName,
-                organizer.LastName,
-                organizerActiveReservations),
-            reservation.MeetingTitle,
-            reservation.StartDate,
-            reservation.EndDate,
-            reservation.NumberOfAttendees,
-            reservation.Status);
+        // Mapping to DTO
+        var reservationDto = Mapper.NewReservationToDTO(reservation, organizer, room, organizerActiveReservations);
 
         return (reservationDto, null);
     }
@@ -144,8 +95,10 @@ public class ReservationService(IAppDbContext db, ReservationValidator validator
             return false;
         }
 
+        // If reservation is complete, the end date is also set to the current time
         reservation.Status = ReservationStatus.Completed;
         reservation.EndDate = DateTime.UtcNow;
+
         await db.SaveChangesAsync();
         return true;
     }
