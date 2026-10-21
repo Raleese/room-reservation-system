@@ -3,7 +3,7 @@ const EXPORTS_ENDPOINT = '/exports';
 const ROOMS_ENDPOINT = '/rooms';
 
 // Export room usage report as a PDF
-export function exportRoomInfoToPdf(roomId: number): Promise<{ blob: Blob; fileName: string | null }> {
+export function exportRoomInfoToPdf(roomId: number): Promise<Blob> {
   return fetch(`${BASE_URL}${EXPORTS_ENDPOINT}${ROOMS_ENDPOINT}/${roomId}/pdf`, {
     method: 'GET'
   })
@@ -13,6 +13,6 @@ export function exportRoomInfoToPdf(roomId: number): Promise<{ blob: Blob; fileN
         throw new Error(`Request failed: ${response.status} ${response.statusText}`);
       }
 
-      return { blob: await response.blob(), fileName: response.headers.get('Content-Disposition')?.split('filename=')[1] || null };
+      return response.blob();
   });
 }
