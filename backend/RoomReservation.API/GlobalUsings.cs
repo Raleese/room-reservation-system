@@ -5,3 +5,4 @@ global using RoomReservation.Core.Interfaces;
 global using RoomReservation.Core.Services;
 global using RoomReservation.Core.Services.Reservations;
 global using RoomReservation.Infrastructure.Data;
+global using RoomReservation.API.BackgroundTasks;

@@ -29,6 +29,8 @@ builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddScoped<IAppDbContext>(serviceProvider => serviceProvider.GetRequiredService<AppDbContext>());
 builder.Services.AddScoped<ReservationValidator>();
 builder.Services.AddScoped<IExportService, ExportService>();
+builder.Services.AddScoped<ReservationCompletionService>();
+builder.Services.AddHostedService<ReservationCompletionTask>();
 
 builder.Services.Configure<BookingOptions>(builder.Configuration.GetSection("Booking"));
 
