@@ -98,6 +98,7 @@ backend/
   RoomReservation.Core/          DTOs, interfaces, business services, validation
   RoomReservation.Domain/        Entities and enums
   RoomReservation.Infrastructure/ EF Core context and sample data seeder
+  RoomReservation.Tests/
 frontend/
   src/Api/                        HTTP API clients
   src/Components/                 Forms, filters, and tables
