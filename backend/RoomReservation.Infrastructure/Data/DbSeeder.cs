@@ -6,7 +6,7 @@ public static class DbSeeder
     {
         if (db.Rooms.Any()) return;
 
-        var now = DateTime.Now;
+        var now = DateTime.UtcNow;
 
         var rooms = new List<Room>
         {
@@ -62,7 +62,7 @@ public static class DbSeeder
             new Reservation { RoomId = rooms[0].Id, UserId = users[0].Id, MeetingTitle = "Weekly planning", StartDate = now.AddDays(-1),
                 EndDate = now.AddDays(-1).AddHours(2), NumberOfAttendees = 6, Status = ReservationStatus.Completed },
             new Reservation { RoomId = rooms[1].Id, UserId = users[1].Id, MeetingTitle = "Product review", StartDate = now,
-                EndDate = now.AddDays(-2).AddHours(2), NumberOfAttendees = 3, Status = ReservationStatus.Completed },
+                EndDate = now.AddDays(1).AddHours(2), NumberOfAttendees = 3, Status = ReservationStatus.Completed },
             new Reservation { RoomId = rooms[2].Id, UserId = users[0].Id, MeetingTitle = "Renovation planning", StartDate = now.AddDays(-3),
                 EndDate = now.AddDays(-3).AddHours(2), NumberOfAttendees = 12, Status = ReservationStatus.Cancelled },
             new Reservation { RoomId = rooms[3].Id, UserId = users[2].Id, MeetingTitle = "Design workshop", StartDate = now,
@@ -70,7 +70,7 @@ public static class DbSeeder
             new Reservation { RoomId = rooms[4].Id, UserId = users[3].Id, MeetingTitle = "Client presentation", StartDate = now.AddDays(3),
                 EndDate = now.AddDays(3).AddHours(2), NumberOfAttendees = 10, Status = ReservationStatus.Booked },
             new Reservation { RoomId = rooms[5].Id, UserId = users[4].Id, MeetingTitle = "Team sync", StartDate = now,
-                EndDate = now.AddDays(5).AddHours(1), NumberOfAttendees = 5, Status = ReservationStatus.Booked },
+                EndDate = now.AddDays(0).AddHours(0).AddMinutes(2), NumberOfAttendees = 5, Status = ReservationStatus.Booked },
             new Reservation { RoomId = rooms[6].Id, UserId = users[5].Id, MeetingTitle = "Quarterly review", StartDate = now.AddDays(7),
                 EndDate = now.AddDays(7).AddHours(4), NumberOfAttendees = 14, Status = ReservationStatus.Booked },
             new Reservation { RoomId = rooms[8].Id, UserId = users[6].Id, MeetingTitle = "Marketing meeting", StartDate = now.AddDays(10),
@@ -86,7 +86,7 @@ public static class DbSeeder
             new Reservation { RoomId = rooms[10].Id, UserId = users[1].Id, MeetingTitle = "Operations check-in", StartDate = now.AddDays(28),
                 EndDate = now.AddDays(28).AddHours(1), NumberOfAttendees = 4, Status = ReservationStatus.Booked },
             new Reservation { RoomId = rooms[0].Id, UserId = users[10].Id, MeetingTitle = "Onboarding session", StartDate = now,
-                EndDate = now.AddDays(30).AddHours(2), NumberOfAttendees = 8, Status = ReservationStatus.Booked });
+                EndDate = now.AddDays(0).AddHours(2), NumberOfAttendees = 8, Status = ReservationStatus.Booked });
 
         db.SaveChanges();
     }
