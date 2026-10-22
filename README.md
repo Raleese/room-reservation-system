@@ -19,7 +19,7 @@ A web application for managing meeting rooms and reservations in an office. It i
 - Export a room's schedule info as a PDF file.
 - Seed sample rooms, users, and reservations when the backend starts.
 - Once the meeting ends, the status automatically changes from "Booked" to "Completed".
-- Unit tests for reservation, room, rser services and the reservation validator.
+- Unit tests for reservation, room, User services and the reservation validator.
 
 Reservation validation runs in the backend. The default rules are:
 
