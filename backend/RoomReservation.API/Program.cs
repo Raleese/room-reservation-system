@@ -10,8 +10,12 @@ QuestPDF.Settings.License = LicenseType.Community;
 // Services
 builder.Services.AddOpenApi();
 
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? throw new InvalidOperationException(
+        "The DefaultConnection connection string is required. Configure ConnectionStrings:DefaultConnection.");
+
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseInMemoryDatabase("RoomReservationDb"));
+    options.UseNpgsql(connectionString));
 
 builder.Services.AddCors(options =>
 {
@@ -42,7 +46,9 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    DbSeeder.Seed(scope.ServiceProvider.GetRequiredService<AppDbContext>());
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+    DbSeeder.Seed(db);
 }
 
 // Configure the HTTP request pipeline.

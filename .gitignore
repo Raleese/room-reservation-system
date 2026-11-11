@@ -23,6 +23,8 @@
 .env
 .env.*
 !.env.example
+**/appsettings.Development.json
+**/appsettings.*.local.json
 
 # Logs and temporary files
 *.log

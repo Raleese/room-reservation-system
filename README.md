@@ -118,5 +118,23 @@ frontend/
 
 ## Implementation notes
 
-- The backend uses an EF Core in-memory database. Seed data is recreated when the backend process starts.
+- The backend uses PostgreSQL through EF Core. The development connection string is configured in `backend/RoomReservation.API/appsettings.Development.json`; production should provide `ConnectionStrings__DefaultConnection` as an environment variable.
 - DTO mapping is handled by the backend mapper.
+
+## PostgreSQL setup
+
+Install PostgreSQL locally and create a database named `room_reservation`. Copy `backend/RoomReservation.API/appsettings.Development.example.json` to `backend/RoomReservation.API/appsettings.Development.json`, then replace `CHANGE_ME` with your local PostgreSQL password. The copied development file is ignored by Git because it contains local credentials.
+
+Install the EF Core CLI if needed:
+
+```bash
+dotnet tool install --global dotnet-ef
+```
+
+Create the initial migration from the repository root:
+
+```bash
+dotnet ef migrations add InitialCreate --project backend/RoomReservation.Infrastructure/RoomReservation.Infrastructure.csproj --startup-project backend/RoomReservation.API/RoomReservation.API.csproj --output-dir Data/Migrations
+```
+
+The API applies pending migrations and seeds sample data when it starts. For hosting, set `ConnectionStrings__DefaultConnection` in the API service's environment variables and do not commit real credentials.
